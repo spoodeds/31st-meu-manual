@@ -1,0 +1,2691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>31st MEU — Corpsman Training Manual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0e;
+    --bg2: #111418;
+    --bg3: #181d22;
+    --panel: #1a2028;
+    --border: #2a3540;
+    --border2: #3a4a58;
+    --green: #00e59b;
+    --green-dim: #00a06c;
+    --green-dark: #003d2b;
+    --green-glow: rgba(0,229,155,0.12);
+    --amber: #f5a623;
+    --amber-dim: #b57a18;
+    --amber-dark: #3d2900;
+    --red: #e84040;
+    --red-dim: #a02828;
+    --red-dark: #3d0808;
+    --blue: #4ab3ff;
+    --blue-dark: #0a2a40;
+    --text: #d8e4ec;
+    --text2: #8fa8b8;
+    --text3: #4a6070;
+    --mono: 'Share Tech Mono', monospace;
+    --head: 'Barlow Condensed', sans-serif;
+    --body: 'Barlow', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* SCANLINE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* HEADER */
+  .site-header {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--green-dim);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0;
+  }
+
+  .header-top {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    height: 52px;
+    padding: 0 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 0 20px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    height: 36px;
+  }
+
+  .header-inner::-webkit-scrollbar { display: none; }
+
+  .meu-badge {
+    font-family: var(--head);
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--green);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .meu-badge span { color: var(--text2); font-weight: 400; font-size: 13px; display: block; letter-spacing: 0.1em; line-height: 1; }
+
+  .nav-btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text3);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    padding: 0 12px;
+    height: 36px;
+    letter-spacing: 0.07em;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .nav-btn:hover { color: var(--text2); }
+  .nav-btn.active { color: var(--green); border-bottom-color: var(--green); }
+
+  .status-bar {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--green);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
+  .pulse-dot {
+    width: 7px; height: 7px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* LAYOUT */
+  .wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* HERO BANNER */
+  .hero {
+    padding: 40px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: 'CORPSMAN';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--head);
+    font-size: 140px;
+    font-weight: 800;
+    color: rgba(0,229,155,0.04);
+    letter-spacing: 0.1em;
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 0.2em;
+    margin-bottom: 12px;
+  }
+
+  .hero h1 {
+    font-family: var(--head);
+    font-size: 52px;
+    font-weight: 800;
+    line-height: 1;
+    color: #fff;
+    letter-spacing: 0.02em;
+    margin-bottom: 12px;
+  }
+
+  .hero h1 em { color: var(--green); font-style: normal; }
+
+  .hero-sub {
+    font-size: 15px;
+    color: var(--text2);
+    max-width: 600px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .hero-pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .pill {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.06em;
+  }
+
+  .pill-green { background: var(--green-dark); color: var(--green); border: 1px solid var(--green-dim); }
+  .pill-amber { background: var(--amber-dark); color: var(--amber); border: 1px solid var(--amber-dim); }
+  .pill-red { background: var(--red-dark); color: var(--red); border: 1px solid var(--red-dim); }
+  .pill-blue { background: var(--blue-dark); color: var(--blue); border: 1px solid #2a6090; }
+
+  /* SECTIONS */
+  .section { margin-bottom: 64px; }
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 0.2em;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .section-title {
+    font-family: var(--head);
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+    margin-bottom: 24px;
+  }
+
+  /* MARCH CARDS */
+  .march-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  @media(max-width: 860px) { .march-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .march-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .march-card:hover, .march-card.active {
+    border-color: var(--green-dim);
+    background: var(--green-glow);
+  }
+
+  .march-card.active { border-color: var(--green); }
+
+  .march-letter {
+    font-family: var(--head);
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--green);
+    margin-bottom: 6px;
+  }
+
+  .march-word {
+    font-family: var(--head);
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+
+  .march-priority {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+  }
+
+  .march-detail {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--green);
+    border-radius: 0 6px 6px 0;
+    padding: 24px 28px;
+    display: none;
+    margin-bottom: 24px;
+  }
+
+  .march-detail.visible { display: block; }
+  .march-detail h3 {
+    font-family: var(--head);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+
+  /* TWO COLUMN */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media(max-width: 720px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media(max-width: 860px) { .three-col { grid-template-columns: 1fr 1fr; } }
+
+  /* CARDS */
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+  }
+
+  .card-title {
+    font-family: var(--head);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #fff;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-title .icon {
+    font-size: 14px;
+    background: var(--green-dark);
+    color: var(--green);
+    width: 26px;
+    height: 26px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* TABLES */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    font-family: var(--mono);
+  }
+
+  .data-table th {
+    background: var(--bg3);
+    color: var(--text2);
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .data-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .val-normal { color: var(--green); }
+  .val-warn { color: var(--amber); }
+  .val-crit { color: var(--red); }
+
+  /* STEP LISTS */
+  .step-list { list-style: none; }
+  .step-list li {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    background: var(--green-dark);
+    color: var(--green);
+    min-width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .step-list li p { color: var(--text2); font-size: 13px; margin-top: 2px; }
+
+  /* ALERT BOXES */
+  .alert {
+    padding: 14px 18px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin: 16px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .alert-icon { font-size: 16px; margin-top: 1px; flex-shrink: 0; }
+  .alert-green { background: var(--green-dark); border: 1px solid var(--green-dim); color: var(--green); }
+  .alert-amber { background: var(--amber-dark); border: 1px solid var(--amber-dim); color: var(--amber); }
+  .alert-red { background: var(--red-dark); border: 1px solid var(--red-dim); color: var(--red); }
+  .alert-blue { background: var(--blue-dark); border: 1px solid #2a6090; color: var(--blue); }
+
+  /* VITAL MONITOR */
+  .vital-monitor {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+    font-family: var(--mono);
+  }
+
+  .vital-monitor-title {
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.15em;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+  }
+
+  .vitals-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  @media(max-width: 720px) { .vitals-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .vital-item { }
+  .vital-label { font-size: 10px; color: var(--text3); letter-spacing: 0.12em; margin-bottom: 4px; }
+  .vital-value { font-size: 26px; font-weight: 400; line-height: 1; }
+  .vital-unit { font-size: 11px; color: var(--text3); margin-top: 2px; }
+  .v-green { color: var(--green); }
+  .v-amber { color: var(--amber); }
+  .v-red { color: var(--red); animation: blink 1s step-end infinite; }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  /* DRUG CARDS */
+  .drug-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .drug-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px;
+    transition: border-color 0.2s;
+  }
+
+  .drug-card:hover { border-color: var(--border2); }
+
+  .drug-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    gap: 12px;
+  }
+
+  .drug-name {
+    font-family: var(--head);
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.04em;
+  }
+
+  .drug-class {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .class-analgesic { background: rgba(74,179,255,0.15); color: var(--blue); }
+  .class-sedative { background: rgba(170,100,255,0.15); color: #aa64ff; }
+  .class-hemostatic { background: rgba(0,229,155,0.15); color: var(--green); }
+  .class-cardiac { background: rgba(232,64,64,0.15); color: var(--red); }
+  .class-antiemetic { background: rgba(245,166,35,0.15); color: var(--amber); }
+  .class-anesthetic { background: rgba(100,200,100,0.15); color: #64c864; }
+
+  .drug-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .drug-row:last-child { border-bottom: none; }
+  .drug-row .lbl { color: var(--text3); font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; }
+  .drug-row .val { color: var(--text); }
+
+  .ci-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    background: var(--red-dark);
+    color: var(--red);
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin: 2px 2px 2px 0;
+    display: inline-block;
+  }
+
+  /* 9-LINE */
+  .nine-line {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .nine-line-row {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nine-line-row:last-child { border-bottom: none; }
+
+  .nl-num {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--green);
+    background: var(--bg3);
+    padding: 12px 16px;
+    min-width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid var(--border);
+    font-weight: 600;
+  }
+
+  .nl-content { padding: 12px 16px; flex: 1; }
+  .nl-field { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 2px; }
+  .nl-desc { font-size: 12px; color: var(--text2); font-family: var(--mono); }
+  .nl-example { font-size: 11px; color: var(--text3); font-family: var(--mono); margin-top: 4px; font-style: italic; }
+
+  /* SHOCK TABLE */
+  .shock-bar {
+    height: 8px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+  }
+
+  /* QUICK REFERENCE ACCORDION */
+  .accordion { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 8px; }
+
+  .accordion-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: var(--panel);
+    cursor: pointer;
+    font-family: var(--head);
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.04em;
+    user-select: none;
+  }
+
+  .accordion-head:hover { background: var(--bg3); }
+  .accordion-arrow { color: var(--green); font-size: 18px; transition: transform 0.2s; }
+  .accordion.open .accordion-arrow { transform: rotate(90deg); }
+  .accordion-body { display: none; padding: 20px; background: var(--bg2); border-top: 1px solid var(--border); }
+  .accordion.open .accordion-body { display: block; }
+
+  /* ASSESSMENT TOOL */
+  .assess-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .assess-input label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+
+  .assess-input input, .assess-input select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 14px;
+  }
+
+  .assess-input input:focus, .assess-input select:focus {
+    outline: none;
+    border-color: var(--green-dim);
+  }
+
+  .assess-btn {
+    font-family: var(--head);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    background: var(--green-dark);
+    color: var(--green);
+    border: 1px solid var(--green-dim);
+    padding: 10px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  .assess-btn:hover { background: rgba(0,229,155,0.2); border-color: var(--green); }
+
+  .assess-result {
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 16px;
+    background: var(--bg);
+    font-size: 14px;
+    min-height: 80px;
+    display: none;
+  }
+
+  .assess-result.visible { display: block; }
+
+  .result-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+
+  /* DRUG TABS */
+  .drug-tab {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    padding: 10px 18px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text3);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .drug-tab:hover { color: var(--text2); }
+  .drug-tab.active { color: var(--green); border-bottom-color: var(--green); }
+  .drug-tab-panel { padding-top: 24px; }
+  .pharm-table-wrap { overflow-x: auto; }
+  .pharm-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 900px; }
+  .pharm-table th { background: var(--bg3); color: var(--text3); padding: 8px 10px; text-align: left; font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  .pharm-table td { padding: 10px 10px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text2); font-size: 12px; line-height: 1.5; }
+  .pharm-table tr:last-child td { border-bottom: none; }
+  .pharm-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .drug-row-cardiac td { background: rgba(232,64,64,0.04); }
+  .drug-row-cardiac:hover td { background: rgba(232,64,64,0.08) !important; }
+  .drug-name-cell { color: #fff; font-weight: 600; font-size: 13px; white-space: nowrap; min-width: 130px; }
+  .mono-cell { font-family: var(--mono); font-size: 11px; color: var(--text2); }
+  .route-tag { font-family: var(--mono); font-size: 10px; background: var(--bg3); border: 1px solid var(--border); color: var(--text2); padding: 2px 5px; border-radius: 3px; margin-right: 3px; white-space: nowrap; display: inline-block; margin-bottom: 2px; }
+  .buc-tag { background: rgba(170,100,255,0.1); color: #aa64ff; border-color: rgba(170,100,255,0.3); }
+  .inh-tag { background: rgba(74,179,255,0.1); color: var(--blue); border-color: rgba(74,179,255,0.3); }
+  .po-tag { background: rgba(100,200,100,0.1); color: #64c864; border-color: rgba(100,200,100,0.3); }
+  .in-tag { background: rgba(245,166,35,0.1); color: var(--amber); border-color: rgba(245,166,35,0.3); }
+  .effect-up { color: var(--red); font-family: var(--mono); font-weight: 600; white-space: nowrap; text-align: center; }
+  .effect-down { color: var(--green); font-family: var(--mono); font-weight: 600; white-space: nowrap; text-align: center; }
+  .effect-neutral { color: var(--text3); font-family: var(--mono); text-align: center; }
+  .iv-only { font-size: 10px; }
+  .effect-pain { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.06em; padding: 2px 6px; border-radius: 3px; white-space: nowrap; }
+  .effect-pain-vstrong { background: rgba(232,64,64,0.2); color: var(--red); }
+  .effect-pain-strong { background: rgba(245,166,35,0.2); color: var(--amber); }
+  .effect-pain-mod { background: rgba(74,179,255,0.2); color: var(--blue); }
+  .effect-pain-weak { background: rgba(100,200,100,0.15); color: #64c864; }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 20px 24px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.08em;
+  }
+
+  /* UTIL */
+  .mt8 { margin-top: 8px; }
+  .mt16 { margin-top: 16px; }
+  .mt24 { margin-top: 24px; }
+  p { color: var(--text2); font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+  strong { color: var(--text); font-weight: 600; }
+  .mono { font-family: var(--mono); }
+  .green { color: var(--green); }
+  .amber { color: var(--amber); }
+  .red { color: var(--red); }
+  .white { color: #fff; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+  /* scroll sections */
+  section[id] { scroll-margin-top: 92px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-top">
+    <div class="meu-badge">31st MEU<span>CORPSMAN MANUAL</span></div>
+    <div style="flex:1;"></div>
+    <div class="status-bar"><div class="pulse-dot"></div>SYSTEM ONLINE</div>
+  </div>
+  <div class="header-inner">
+      <button class="nav-btn" data-target="march" onclick="jumpTo('march')">MARCH</button>
+      <button class="nav-btn" data-target="vitals" onclick="jumpTo('vitals')">VITALS</button>
+      <button class="nav-btn" data-target="hemorrhage" onclick="jumpTo('hemorrhage')">HEMORRHAGE</button>
+      <button class="nav-btn" data-target="pharmacology" onclick="jumpTo('pharmacology')">PHARMACOLOGY</button>
+      <button class="nav-btn" data-target="cardiac" onclick="jumpTo('cardiac')">CARDIAC ARREST</button>
+      <button class="nav-btn" data-target="medevac" onclick="jumpTo('medevac')">MEDEVAC</button>
+      <button class="nav-btn" data-target="assessment" onclick="jumpTo('assessment')">ASSESSMENT</button>
+      <button class="nav-btn" data-target="quickref" onclick="jumpTo('quickref')">QUICK REF</button>
+      <button class="nav-btn" data-target="ivaccess" onclick="jumpTo('ivaccess')">IV / FLUIDS</button>
+      <button class="nav-btn" data-target="airway" onclick="jumpTo('airway')">AIRWAY</button>
+      <button class="nav-btn" data-target="woundcare" onclick="jumpTo('woundcare')">WOUNDS</button>
+      <button class="nav-btn" data-target="burns" onclick="jumpTo('burns')">BURNS</button>
+      <button class="nav-btn" data-target="procedures" onclick="jumpTo('procedures')">PROCEDURES</button>
+      <button class="nav-btn" data-target="comms" onclick="jumpTo('comms')">COMMS</button>
+  </div>
+</header>
+
+<div class="wrapper">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">// 31ST MARINE EXPEDITIONARY UNIT — ACM MEDICAL SYSTEM</div>
+    <h1>CORPSMAN<br><em>TRAINING MANUAL</em></h1>
+    <p class="hero-sub">Comprehensive combat medical doctrine adapted for Arma 3 milsim operations using the Advanced Combat Medical (ACM) mod. MARCH protocol, pharmacology, MEDEVAC, and prolonged field care.</p>
+    <div class="hero-pills">
+      <span class="pill pill-green">MARCH DOCTRINE</span>
+      <span class="pill pill-amber">ACM MOD</span>
+      <span class="pill pill-blue">MILSIM TRAINING</span>
+      <span class="pill pill-red">COMBAT MED</span>
+    </div>
+  </div>
+
+  <!-- SECTION: MARCH -->
+  <section id="march" class="section">
+    <div class="section-label">01 // PRIORITY ALGORITHM</div>
+    <div class="section-title">MARCH Trauma Protocol</div>
+
+    <p>All combat medical care follows the MARCH algorithm. This sequence is non-negotiable — it prioritizes injuries in order of how quickly they will kill the casualty. A medic who manages a fracture before stopping arterial bleeding will lose a patient. Work the algorithm, every patient, every time.</p>
+
+    <div class="march-grid">
+      <div class="march-card active" onclick="showMarch('M', this)">
+        <div class="march-letter">M</div>
+        <div class="march-word">MASSIVE HEMORRHAGE</div>
+        <div class="march-priority">PRIORITY 1</div>
+      </div>
+      <div class="march-card" onclick="showMarch('A', this)">
+        <div class="march-letter">A</div>
+        <div class="march-word">AIRWAY</div>
+        <div class="march-priority">PRIORITY 2</div>
+      </div>
+      <div class="march-card" onclick="showMarch('R', this)">
+        <div class="march-letter">R</div>
+        <div class="march-word">RESPIRATION</div>
+        <div class="march-priority">PRIORITY 3</div>
+      </div>
+      <div class="march-card" onclick="showMarch('C', this)">
+        <div class="march-letter">C</div>
+        <div class="march-word">CIRCULATION</div>
+        <div class="march-priority">PRIORITY 4</div>
+      </div>
+      <div class="march-card" onclick="showMarch('H', this)">
+        <div class="march-letter">H</div>
+        <div class="march-word">HYPOTHERMIA / HEAD</div>
+        <div class="march-priority">PRIORITY 5</div>
+      </div>
+    </div>
+
+    <!-- MARCH Detail Panels -->
+    <div id="march-M" class="march-detail visible">
+      <h3>M — MASSIVE HEMORRHAGE</h3>
+      <div class="two-col">
+        <div>
+          <p style="color:#fff; font-weight:600; margin-bottom:8px;">Why it's first:</p>
+          <p>Uncontrolled hemorrhage is the <strong>leading cause of preventable combat death</strong>. A severed femoral artery can cause unconsciousness in under 60 seconds and death in under 3 minutes. Nothing else matters if the casualty bleeds out.</p>
+          <div class="alert alert-red">
+            <span class="alert-icon">!</span>
+            <span>Tourniquet application must occur within SECONDS of identifying arterial bleeding. There is no time to deliberate.</span>
+          </div>
+          <p><strong>Signs of massive hemorrhage:</strong></p>
+          <ul class="step-list mt8">
+            <li><span class="step-num">1</span><span>Pulsatile (spurting) blood — indicates arterial involvement</span></li>
+            <li><span class="step-num">2</span><span>Large pooling blood, rapidly soaking through dressings</span></li>
+            <li><span class="step-num">3</span><span>Traumatic amputation — treat as arterial bleed even if not actively spurting</span></li>
+            <li><span class="step-num">4</span><span>Wound depth exposing major vessels (femoral, brachial, axillary, radial)</span></li>
+          </ul>
+        </div>
+        <div>
+          <p style="color:#fff; font-weight:600; margin-bottom:8px;">Treatment steps (in order):</p>
+          <ul class="step-list">
+            <li><span class="step-num">1</span><div><strong>Apply tourniquet — HIGH AND TIGHT</strong><p>Place 2–3 inches proximal to wound. Tighten until bleeding stops, not until it hurts. Mark time of application (TK TIME).</p></div></li>
+            <li><span class="step-num">2</span><div><strong>Pack wound with hemostatic gauze</strong><p>In ACM: use QuikClot or Combat Gauze. Pack tightly into the wound cavity. Apply direct pressure for 3 minutes minimum.</p></div></li>
+            <li><span class="step-num">3</span><div><strong>Apply pressure dressing</strong><p>Secure hemostatic packing. Do not remove once placed. Wound bridging is managed by pressure, not removal.</p></div></li>
+            <li><span class="step-num">4</span><div><strong>Reassess hemorrhage control</strong><p>Check for continued bleeding through dressing. If soaking through: add second layer, increase pressure, consider second TK.</p></div></li>
+            <li><span class="step-num">5</span><div><strong>Initiate blood transfusion if indicated</strong><p>If signs of hemorrhagic shock: establish IV access and begin transfusion. Whole blood is preferred over saline in major hemorrhage.</p></div></li>
+          </ul>
+          <div class="alert alert-amber">
+            <span class="alert-icon">⚠</span>
+            <span>In ACM: tourniquets cause limb damage over time. Document time applied and communicate to higher care. Loosen only when hemorrhage is definitively controlled and patient is at a CCP or higher.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="march-A" class="march-detail">
+      <h3>A — AIRWAY</h3>
+      <div class="two-col">
+        <div>
+          <p>After hemorrhage control, confirm the casualty has a patent airway. An unconscious casualty will have the tongue fall back and obstruct the pharynx. If they cannot breathe, they cannot be saved regardless of other interventions.</p>
+          <p><strong>Signs of airway compromise:</strong></p>
+          <ul class="step-list mt8">
+            <li><span class="step-num">1</span><span>Gurgling — fluid (blood, secretions) in the airway</span></li>
+            <li><span class="step-num">2</span><span>Snoring / stridor — partial obstruction from tongue, swelling, or debris</span></li>
+            <li><span class="step-num">3</span><span>Unconsciousness without other apparent cause</span></li>
+            <li><span class="step-num">4</span><span>Paradoxical chest movement or absent respiratory effort</span></li>
+            <li><span class="step-num">5</span><span>Facial trauma with suspected inhalation injury or swelling</span></li>
+          </ul>
+        </div>
+        <div>
+          <p style="color:#fff; font-weight:600; margin-bottom:8px;">Interventions — in order of invasiveness:</p>
+          <ul class="step-list">
+            <li><span class="step-num">1</span><div><strong>Head-tilt / chin-lift</strong><p>For unconscious casualties without suspected spinal injury. Tilts the head back to open the pharyngeal airway.</p></div></li>
+            <li><span class="step-num">2</span><div><strong>Jaw thrust</strong><p>Preferred if spinal injury is suspected. Displaces the mandible anteriorly without moving the cervical spine.</p></div></li>
+            <li><span class="step-num">3</span><div><strong>Nasopharyngeal airway (NPA)</strong><p>In ACM: insert NPA if patient is unconscious or combative and cannot maintain airway. Lubricate and insert into the right naris. Tolerated in semi-conscious patients.</p></div></li>
+            <li><span class="step-num">4</span><div><strong>Endotracheal intubation</strong><p>Advanced procedure. Definitive airway control. In ACM: requires advanced medic skill. Monitor for right mainstem intubation (unilateral breath sounds).</p></div></li>
+          </ul>
+          <div class="alert alert-blue">
+            <span class="alert-icon">i</span>
+            <span>In ACM: always position unconscious casualties in the recovery position (lateral decumbent) to prevent aspiration if intubation is not immediately available.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="march-R" class="march-detail">
+      <h3>R — RESPIRATION</h3>
+      <div class="two-col">
+        <div>
+          <p>Even with a patent airway, thoracic injuries can prevent effective ventilation. <strong>Tension pneumothorax</strong> is the second most common cause of preventable combat death after hemorrhage. Identify and treat it immediately.</p>
+          <p style="color:#fff; font-weight:600; margin-top:16px; margin-bottom:8px;">Tension pneumothorax signs:</p>
+          <ul class="step-list">
+            <li><span class="step-num">→</span><span>Absent or diminished breath sounds unilaterally</span></li>
+            <li><span class="step-num">→</span><span>Tracheal deviation (toward unaffected side — late sign)</span></li>
+            <li><span class="step-num">→</span><span>Hypoxia / cyanosis not corrected by oxygen</span></li>
+            <li><span class="step-num">→</span><span>Distended neck veins (JVD)</span></li>
+            <li><span class="step-num">→</span><span>Hemodynamic instability despite hemorrhage control</span></li>
+          </ul>
+          <div class="alert alert-red mt16">
+            <span class="alert-icon">!</span>
+            <span>Tension pneumothorax is a clinical diagnosis. Do NOT wait for imaging. If suspected, perform needle decompression immediately.</span>
+          </div>
+        </div>
+        <div>
+          <p style="color:#fff; font-weight:600; margin-bottom:8px;">Treatment:</p>
+          <ul class="step-list">
+            <li><span class="step-num">1</span><div><strong>Seal open chest wounds (sucking chest wound)</strong><p>Apply a vented chest seal (Hyfin or Bolin) to prevent air entrainment. Vented seals allow air to escape but not enter during inspiration.</p></div></li>
+            <li><span class="step-num">2</span><div><strong>Needle decompression</strong><p>In ACM: 14g angiocath at 2nd intercostal space, midclavicular line. Rush of air confirms tension pneumo. Leave in place; a chest tube follows when resources allow.</p></div></li>
+            <li><span class="step-num">3</span><div><strong>Chest tube (tube thoracostomy)</strong><p>Definitive treatment for pneumothorax/hemothorax. 5th intercostal space, anterior axillary line. Advanced procedure — PFC only.</p></div></li>
+            <li><span class="step-num">4</span><div><strong>Supplemental oxygen</strong><p>In ACM: maintain SpO₂ ≥ 95%. If below 90% despite airway management, suspect pulmonary contusion or significant hemothorax.</p></div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="march-C" class="march-detail">
+      <h3>C — CIRCULATION</h3>
+      <div class="two-col">
+        <div>
+          <p>Having controlled hemorrhage in the M phase, the C phase focuses on <strong>restoring and maintaining perfusion</strong>. Assess for shock, establish IV/IO access, and initiate volume resuscitation using the permissive hypotension strategy.</p>
+          <p style="color:#fff; font-weight:600; margin-top:16px; margin-bottom:8px;">Hemorrhagic shock classes:</p>
+          <table class="data-table mt8">
+            <tr><th>CLASS</th><th>BLOOD LOSS</th><th>HR</th><th>SBP</th><th>MENTAL STATUS</th></tr>
+            <tr><td class="val-normal">I</td><td>&lt; 750 mL</td><td>≤100</td><td>Normal</td><td>Normal / anxious</td></tr>
+            <tr><td class="val-warn">II</td><td>750–1500 mL</td><td>100–120</td><td>Normal</td><td>Anxious</td></tr>
+            <tr><td class="val-warn">III</td><td>1500–2000 mL</td><td>120–140</td><td>Decreased</td><td>Confused</td></tr>
+            <tr><td class="val-crit">IV</td><td>&gt; 2000 mL</td><td>&gt;140</td><td>Very low</td><td>Lethargic / unresponsive</td></tr>
+          </table>
+        </div>
+        <div>
+          <p style="color:#fff; font-weight:600; margin-bottom:8px;">Fluid resuscitation strategy:</p>
+          <div class="alert alert-green">
+            <span class="alert-icon">✓</span>
+            <span><strong>Target SBP: 80–90 mmHg</strong> (permissive hypotension). Higher pressures may dislodge forming clots and worsen coagulopathy.</span>
+          </div>
+          <ul class="step-list mt16">
+            <li><span class="step-num">1</span><div><strong>Establish IV or IO access</strong><p>Two large-bore IVs (14–16g) antecubital preferred. If IV impossible: tibial IO is faster to establish than you think.</p></div></li>
+            <li><span class="step-num">2</span><div><strong>Fluid priority: blood first</strong><p>Whole blood > packed RBCs + FFP (1:1 ratio) > crystalloid. Saline is a distant last resort. It worsens coagulopathy and dilutes clotting factors.</p></div></li>
+            <li><span class="step-num">3</span><div><strong>Administer TXA early</strong><p>Tranexamic acid within 3 hours of injury. Stabilizes clot formation. <strong>Do not give TXA after 3 hours</strong> — it becomes procoagulant and worsens mortality.</p></div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="march-H" class="march-detail">
+      <h3>H — HYPOTHERMIA & HEAD INJURY</h3>
+      <div class="two-col">
+        <div>
+          <p style="color:#fff; font-weight:600; margin-bottom:8px;">Hypothermia — The Lethal Triad:</p>
+          <p>Trauma patients are at extreme risk for the <strong>lethal triad of death</strong>: Hypothermia + Acidosis + Coagulopathy. Each worsens the others. A cold patient cannot clot effectively; a patient who cannot clot loses blood, becomes acidotic, and dies.</p>
+          <div class="alert alert-amber">
+            <span class="alert-icon">⚠</span>
+            <span>Any patient who has lost significant blood is a hypothermia risk regardless of ambient temperature. Begin warming immediately after hemorrhage control.</span>
+          </div>
+          <ul class="step-list mt16">
+            <li><span class="step-num">1</span><span>Remove wet/blood-soaked clothing — wet clothing accelerates heat loss by 25x</span></li>
+            <li><span class="step-num">2</span><span>Apply thermal blanket / heat-reflective wrap (hypothermia prevention blanket in ACM)</span></li>
+            <li><span class="step-num">3</span><span>Warm IV fluids if possible — cold saline drops core temp rapidly</span></li>
+            <li><span class="step-num">4</span><span>Protect from wind and ground contact</span></li>
+          </ul>
+        </div>
+        <div>
+          <p style="color:#fff; font-weight:600; margin-bottom:8px;">Head injury assessment:</p>
+          <p>Traumatic brain injury (TBI) is secondary to hemorrhage management but must be identified early. Increased intracranial pressure (ICP) can cause cerebral herniation if untreated.</p>
+          <table class="data-table mt8">
+            <tr><th>SIGN</th><th>IMPLICATION</th></tr>
+            <tr><td>Unequal pupils (anisocoria)</td><td class="val-crit">Herniation / cranial nerve III compression</td></tr>
+            <tr><td>Fixed/dilated pupils</td><td class="val-crit">Severe ICP or brainstem injury</td></tr>
+            <tr><td>Confusion / GCS decline</td><td class="val-warn">Rising ICP, hypoxia, or shock</td></tr>
+            <tr><td>Projectile vomiting</td><td class="val-warn">Elevated ICP</td></tr>
+            <tr><td>Decorticate / decerebrate posturing</td><td class="val-crit">Severe cortical or brainstem damage</td></tr>
+          </table>
+          <div class="alert alert-blue mt16">
+            <span class="alert-icon">i</span>
+            <span>In TBI: maintain SpO₂ ≥ 95% and SBP ≥ 90 mmHg. Hypoxia and hypotension worsen TBI outcomes dramatically. Do NOT over-sedate; it masks neurological decline.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: VITALS -->
+  <section id="vitals" class="section">
+    <div class="section-label">02 // PATIENT MONITORING</div>
+    <div class="section-title">Vital Signs Reference</div>
+
+    <p>Understanding what normal looks like is what allows you to detect deterioration. Memorize these values — in the field, you won't have time to look them up.</p>
+
+    <!-- Simulated Monitor -->
+    <div class="vital-monitor mt16">
+      <div class="vital-monitor-title">// PATIENT MONITOR DISPLAY — REFERENCE VALUES</div>
+      <div class="vitals-grid">
+        <div class="vital-item">
+          <div class="vital-label">HEART RATE</div>
+          <div class="vital-value v-green" id="hr-display">72</div>
+          <div class="vital-unit">BPM — normal 60–100</div>
+        </div>
+        <div class="vital-item">
+          <div class="vital-label">RESP RATE</div>
+          <div class="vital-value v-green" id="rr-display">16</div>
+          <div class="vital-unit">br/min — normal 12–20</div>
+        </div>
+        <div class="vital-item">
+          <div class="vital-label">SpO₂</div>
+          <div class="vital-value v-green" id="spo2-display">98</div>
+          <div class="vital-unit">% — normal ≥95%</div>
+        </div>
+        <div class="vital-item">
+          <div class="vital-label">EtCO₂</div>
+          <div class="vital-value v-green">38</div>
+          <div class="vital-unit">mmHg — normal 35–45</div>
+        </div>
+        <div class="vital-item">
+          <div class="vital-label">SBP / DBP</div>
+          <div class="vital-value v-green" style="font-size:20px;">120/80</div>
+          <div class="vital-unit">mmHg — target ≥90 SBP</div>
+        </div>
+        <div class="vital-item">
+          <div class="vital-label">CAP REFILL</div>
+          <div class="vital-value v-green">≤2</div>
+          <div class="vital-unit">seconds — normal</div>
+        </div>
+        <div class="vital-item">
+          <div class="vital-label">TEMP</div>
+          <div class="vital-value v-green">37.0</div>
+          <div class="vital-unit">°C — normal 36.5–37.5</div>
+        </div>
+        <div class="vital-item">
+          <div class="vital-label">GCS</div>
+          <div class="vital-value v-green">15</div>
+          <div class="vital-unit">E4V5M6 — normal</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col mt24">
+      <div class="card">
+        <div class="card-title">Vital Sign Derangements</div>
+        <table class="data-table">
+          <tr><th>PARAMETER</th><th>ABNORMAL VALUE</th><th>SIGNIFICANCE</th></tr>
+          <tr><td>HR &gt; 120</td><td class="val-warn">Tachycardia</td><td>Shock, pain, hypovolemia</td></tr>
+          <tr><td>HR &lt; 50</td><td class="val-crit">Bradycardia</td><td>Vagal, cardiac injury, drugs</td></tr>
+          <tr><td>SBP &lt; 90</td><td class="val-warn">Hypotension</td><td>Hemorrhagic shock</td></tr>
+          <tr><td>SBP &lt; 70</td><td class="val-crit">Severe hypotension</td><td>Decompensated shock</td></tr>
+          <tr><td>SpO₂ &lt; 95%</td><td class="val-warn">Hypoxia</td><td>Airway/respiratory compromise</td></tr>
+          <tr><td>SpO₂ &lt; 90%</td><td class="val-crit">Severe hypoxia</td><td>Immediate intervention required</td></tr>
+          <tr><td>EtCO₂ &lt; 25</td><td class="val-warn">Low CO₂</td><td>Hyperventilation / poor perfusion</td></tr>
+          <tr><td>EtCO₂ &gt; 50</td><td class="val-warn">High CO₂</td><td>Hypoventilation</td></tr>
+          <tr><td>EtCO₂ 10–20</td><td class="val-crit">Cardiac arrest range</td><td>CPR in progress</td></tr>
+          <tr><td>Temp &lt; 35°C</td><td class="val-warn">Mild hypothermia</td><td>Rewarm aggressively</td></tr>
+          <tr><td>Temp &lt; 32°C</td><td class="val-crit">Severe hypothermia</td><td>Coagulopathy risk</td></tr>
+        </table>
+      </div>
+
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-title">Pulse Location BP Estimation</div>
+          <p>When no BP cuff is available, pulse location provides a rapid perfusion estimate.</p>
+          <table class="data-table mt8">
+            <tr><th>PALPABLE PULSE</th><th>EST. SBP</th><th>ASSESSMENT</th></tr>
+            <tr><td>Radial (wrist)</td><td class="val-green">≥ 80 mmHg</td><td>Adequate</td></tr>
+            <tr><td>Femoral (groin)</td><td class="val-warn">≥ 70 mmHg</td><td>Marginal</td></tr>
+            <tr><td>Carotid (neck) only</td><td class="val-crit">≥ 60 mmHg</td><td>Severe shock</td></tr>
+            <tr><td>No pulse</td><td class="val-crit">Cardiac arrest</td><td>Begin CPR</td></tr>
+          </table>
+          <div class="alert alert-amber mt8">
+            <span class="alert-icon">⚠</span>
+            <span>Loss of radial pulse alone indicates Class III shock — intervene immediately.</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">GCS Scoring (Glasgow Coma Scale)</div>
+          <table class="data-table">
+            <tr><th>COMPONENT</th><th>RESPONSE</th><th>SCORE</th></tr>
+            <tr><td rowspan="4">Eye (E)</td><td>Spontaneous</td><td>4</td></tr>
+            <tr><td>To voice</td><td>3</td></tr>
+            <tr><td>To pain</td><td>2</td></tr>
+            <tr><td>None</td><td>1</td></tr>
+            <tr><td rowspan="5">Verbal (V)</td><td>Oriented</td><td>5</td></tr>
+            <tr><td>Confused</td><td>4</td></tr>
+            <tr><td>Words only</td><td>3</td></tr>
+            <tr><td>Sounds only</td><td>2</td></tr>
+            <tr><td>None</td><td>1</td></tr>
+            <tr><td rowspan="6">Motor (M)</td><td>Obeys commands</td><td>6</td></tr>
+            <tr><td>Localizes pain</td><td>5</td></tr>
+            <tr><td>Withdrawal</td><td>4</td></tr>
+            <tr><td>Decorticate</td><td>3</td></tr>
+            <tr><td>Decerebrate</td><td>2</td></tr>
+            <tr><td>None</td><td>1</td></tr>
+          </table>
+          <p class="mt8">GCS ≤ 8: <strong class="red">Intubate/secure airway.</strong> GCS ≤ 13: <strong class="amber">Head injury suspected.</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt24">
+      <div class="card-title">Reassessment Schedule</div>
+      <div class="two-col">
+        <div>
+          <p style="color:#fff; font-weight:600;">UNSTABLE PATIENT</p>
+          <p>Any patient in shock, with declining GCS, SpO₂ below 95%, or HR above 120. Reassess vitals every <strong class="amber">5 minutes</strong>. Any deterioration triggers immediate re-evaluation of MARCH priorities.</p>
+        </div>
+        <div>
+          <p style="color:#fff; font-weight:600;">STABLE PATIENT</p>
+          <p>Patient with normal vitals, controlled bleeding, patent airway, adequate perfusion. Reassess every <strong class="green">15 minutes</strong>. A patient can decompensate rapidly — never assume stability is permanent.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: HEMORRHAGE -->
+  <section id="hemorrhage" class="section">
+    <div class="section-label">03 // HEMORRHAGE CONTROL</div>
+    <div class="section-title">Blood Volume & Hemorrhagic Shock</div>
+
+    <p>Average adult circulating blood volume is approximately <strong>5 liters (70 mL/kg)</strong>. The body can compensate for small losses, but this compensation eventually fails — and when it does, it fails suddenly and catastrophically.</p>
+
+    <div class="three-col mt16">
+      <div class="card" style="border-color: #2d3d30;">
+        <div style="font-family:var(--mono); font-size:11px; color:var(--green); letter-spacing:0.1em; margin-bottom:12px;">CLASS I — MILD</div>
+        <div style="font-family:var(--head); font-size:36px; font-weight:800; color:var(--green); margin-bottom:4px;">&lt; 750 mL</div>
+        <div style="font-family:var(--mono); font-size:11px; color:var(--text3); margin-bottom:12px;">UP TO 15% BLOOD VOLUME</div>
+        <hr>
+        <p>Compensated. No fluid replacement required in healthy patients. Tachycardia absent or mild. Body manages through vasoconstriction and increased heart rate.</p>
+      </div>
+      <div class="card" style="border-color: #3d3a2a;">
+        <div style="font-family:var(--mono); font-size:11px; color:var(--amber); letter-spacing:0.1em; margin-bottom:12px;">CLASS II — MODERATE</div>
+        <div style="font-family:var(--head); font-size:36px; font-weight:800; color:var(--amber); margin-bottom:4px;">750–1500 mL</div>
+        <div style="font-family:var(--mono); font-size:11px; color:var(--text3); margin-bottom:12px;">15–30% BLOOD VOLUME</div>
+        <hr>
+        <p>Tachycardia begins. Anxiety, restlessness. BP may still be normal due to compensation. <strong>Begin crystalloid replacement</strong>. Evaluate source of hemorrhage.</p>
+      </div>
+      <div class="card" style="border-color: #3d2a2a;">
+        <div style="font-family:var(--mono); font-size:11px; color:var(--red); letter-spacing:0.1em; margin-bottom:12px;">CLASS III–IV — SEVERE</div>
+        <div style="font-family:var(--head); font-size:36px; font-weight:800; color:var(--red); margin-bottom:4px;">&gt; 1500 mL</div>
+        <div style="font-family:var(--mono); font-size:11px; color:var(--text3); margin-bottom:12px;">30%+ BLOOD VOLUME</div>
+        <hr>
+        <p>BP falls. Confusion / altered mental status. Immediate blood transfusion. HR &gt; 120–140. Skin pale, cool, clammy. Surgical hemorrhage control may be required.</p>
+      </div>
+    </div>
+
+    <div class="two-col mt24">
+      <div class="card">
+        <div class="card-title">Tourniquet Application Guide</div>
+        <ul class="step-list">
+          <li><span class="step-num">1</span><div><strong>Placement: HIGH AND TIGHT</strong><p>2–3 inches proximal to the wound. If in doubt, place as high on the limb as possible (high-and-tight = above all junctions). A high TK is easier to move down; a low one may not stop bleeding.</p></div></li>
+          <li><span class="step-num">2</span><div><strong>Tighten until bleeding stops</strong><p>Turn the windlass until active bleeding ceases. One or two clicks past pain. If bleeding continues — tighten further or apply a second TK proximal.</p></div></li>
+          <li><span class="step-num">3</span><div><strong>Mark the time (TK TIME)</strong><p>Write "TK" and the time on the patient's forehead or on the TK itself in permanent marker. Critical for MEDEVAC handoff.</p></div></li>
+          <li><span class="step-num">4</span><div><strong>Reassess every 5 minutes</strong><p>Check for breakthrough bleeding. A properly placed TK completely stops distal pulses. If you can feel a radial pulse below the TK — it is not tight enough.</p></div></li>
+        </ul>
+        <div class="alert alert-red mt8">
+          <span class="alert-icon">!</span>
+          <span>NEVER remove a tourniquet in the field. TK removal is a hospital-level decision with surgeons standing by. Converting a TK in the field causes re-hemorrhage and is fatal.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Wound Packing Technique</div>
+        <p>Junctional wounds (groin, axilla, neck) cannot be tourniqueted. Wound packing with hemostatic gauze is the primary intervention.</p>
+        <ul class="step-list mt8">
+          <li><span class="step-num">1</span><div><strong>Identify the deepest point of the wound</strong><p>Do not pack superficially. The gauze must reach the bleeding source at the base of the wound.</p></div></li>
+          <li><span class="step-num">2</span><div><strong>Pack hemostatic gauze tightly</strong><p>Use one continuous piece, starting at the deepest point. Pack in layers, pressing firmly. No air gaps. The wound must be completely filled.</p></div></li>
+          <li><span class="step-num">3</span><div><strong>Apply direct pressure: 3 MINUTES minimum</strong><p>Full body weight on hands, directly on top of the wound. Three minutes. Use a timer. Releasing too early reopens the wound tract.</p></div></li>
+          <li><span class="step-num">4</span><div><strong>Secure with pressure dressing</strong><p>Apply an Ace wrap or pressure bandage to maintain compression. The dressing continues the job of your hands.</p></div></li>
+          <li><span class="step-num">5</span><div><strong>Consider junctional TK</strong><p>For groin wounds: JETT or SAM Junctional Tourniquet. For axilla/neck: wound packing is definitive.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: PHARMACOLOGY -->
+  <section id="pharmacology" class="section">
+    <div class="section-label">04 // MEDICATIONS</div>
+    <div class="section-title">Combat Pharmacology</div>
+
+    <p>In the ACM system, medications have real physiological effects on HR, BP, RR, and pain. Dosing matters. Timing matters. Understand each drug's concentration, dose window, and hemodynamic consequences — especially on a patient already in shock.</p>
+
+    <!-- EFFECT LEGEND -->
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:24px; align-items:center;">
+      <span style="font-family:var(--mono); font-size:11px; color:var(--text3); letter-spacing:0.1em;">EFFECT KEY:</span>
+      <span style="font-family:var(--mono); font-size:12px; color:var(--red);">+++ Strong increase</span>
+      <span style="font-family:var(--mono); font-size:12px; color:var(--green);">--- Strong decrease</span>
+      <span style="font-family:var(--mono); font-size:12px; color:var(--amber);">-- Moderate decrease</span>
+      <span style="font-family:var(--mono); font-size:12px; color:var(--text2);">— No significant change</span>
+    </div>
+
+    <!-- TAB NAV -->
+    <div style="display:flex; gap:4px; margin-bottom:0; border-bottom:1px solid var(--border);">
+      <button class="drug-tab active" onclick="showDrugTab('iv', this)">IV / IM MEDICATIONS</button>
+      <button class="drug-tab" onclick="showDrugTab('other', this)">AUTOINJECTORS &amp; ALTERNATIVES</button>
+    </div>
+
+    <!-- IV/IM DRUGS -->
+    <div id="drug-tab-iv" class="drug-tab-panel">
+      <div class="pharm-table-wrap">
+        <table class="pharm-table">
+          <thead>
+            <tr>
+              <th>MEDICATION</th>
+              <th>USE</th>
+              <th>ACCESS</th>
+              <th>CONC.</th>
+              <th>DOSE RANGE</th>
+              <th>ONSET</th>
+              <th>PEAK</th>
+              <th>DURATION</th>
+              <th>HR</th>
+              <th>BP</th>
+              <th>RR</th>
+              <th>PAIN</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="drug-row-cardiac">
+              <td class="drug-name-cell">Epinephrine</td>
+              <td>Cardiac Arrest</td>
+              <td><span class="route-tag">IV</span><span class="route-tag">IM</span></td>
+              <td class="mono-cell">1mg/1ml</td>
+              <td class="mono-cell">1 mg</td>
+              <td class="mono-cell">&lt;5s / &lt;30s</td>
+              <td class="mono-cell">~4m</td>
+              <td class="mono-cell">~6m / ~7m</td>
+              <td class="effect-up">+++</td>
+              <td class="effect-up">+++</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+            </tr>
+            <tr>
+              <td class="drug-name-cell">Morphine</td>
+              <td>Managing severe pain</td>
+              <td><span class="route-tag">IV</span><span class="route-tag">IM</span></td>
+              <td class="mono-cell">10mg/2ml · 5mg/ml</td>
+              <td class="mono-cell">(IV) 0.05–0.1mg/kg · 3.75–10mg<br>(IM) 0.07–0.1mg/kg · 4.25–10mg</td>
+              <td class="mono-cell">&lt;25s / &lt;2m</td>
+              <td class="mono-cell">~15m / ~20m</td>
+              <td class="mono-cell">~21m / ~30m</td>
+              <td class="effect-down">--</td>
+              <td class="effect-down">--</td>
+              <td class="effect-down">--</td>
+              <td class="effect-pain effect-pain-strong">STRONG</td>
+            </tr>
+            <tr>
+              <td class="drug-name-cell">Fentanyl</td>
+              <td>Managing severe pain</td>
+              <td><span class="route-tag">IV</span><span class="route-tag">IM</span></td>
+              <td class="mono-cell">100mcg/2ml · 50mcg/ml</td>
+              <td class="mono-cell">(IV) 0.5–1mcg/kg · 38–100mcg<br>(IM) 0.7–1mcg/kg · 52–100mcg</td>
+              <td class="mono-cell">&lt;10s / &lt;30s</td>
+              <td class="mono-cell">~14m / ~15m</td>
+              <td class="mono-cell">~16m / ~20m</td>
+              <td class="effect-down">--</td>
+              <td class="effect-down">--</td>
+              <td class="effect-down">--</td>
+              <td class="effect-pain effect-pain-vstrong">VERY STRONG</td>
+            </tr>
+            <tr>
+              <td class="drug-name-cell">Ketamine</td>
+              <td>Severe pain with compromised breathing</td>
+              <td><span class="route-tag">IV</span><span class="route-tag">IM</span></td>
+              <td class="mono-cell">500mg/10ml · 50mg/ml</td>
+              <td class="mono-cell">(IV) 0.1–0.2mg/kg · 7.5–21mg<br>(IM) 0.4–0.8mg/kg · 30–84mg</td>
+              <td class="mono-cell">&lt;5s / &lt;20s</td>
+              <td class="mono-cell">~9m / ~10m</td>
+              <td class="mono-cell">~11m / ~15m</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-pain effect-pain-strong">STRONG</td>
+            </tr>
+            <tr class="drug-row-cardiac">
+              <td class="drug-name-cell">Amiodarone</td>
+              <td>Treatment of shockable cardiac arrest (VT/VF)</td>
+              <td><span class="route-tag">IV</span></td>
+              <td class="mono-cell">150mg/3ml · 50mg/ml</td>
+              <td class="mono-cell">300mg, up to 2200mg</td>
+              <td class="mono-cell">&lt;10s</td>
+              <td class="mono-cell">~8m</td>
+              <td class="mono-cell">~12m</td>
+              <td class="effect-down">--</td>
+              <td class="effect-down">--</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+            </tr>
+            <tr>
+              <td class="drug-name-cell">Lidocaine</td>
+              <td>(IV) Shockable cardiac arrest · (IM) Pre-procedure</td>
+              <td><span class="route-tag">IV</span><span class="route-tag">IM</span></td>
+              <td class="mono-cell">100mg/5ml · 20mg/ml</td>
+              <td class="mono-cell">(IV) 1mg/kg up to 3mg/kg<br>(IM) 50–100mg</td>
+              <td class="mono-cell">&lt;5s / &lt;10s</td>
+              <td class="mono-cell">~6m / ~4m</td>
+              <td class="mono-cell">~10m / ~10m</td>
+              <td class="effect-down iv-only">-- (IV)</td>
+              <td class="effect-down iv-only">-- (IV)</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+            </tr>
+            <tr>
+              <td class="drug-name-cell">TXA</td>
+              <td>Managing severe internal or external bleeding</td>
+              <td><span class="route-tag">IV</span></td>
+              <td class="mono-cell">1g/10ml · 100mg/ml</td>
+              <td class="mono-cell">1–2g</td>
+              <td class="mono-cell">&lt;15s</td>
+              <td class="mono-cell">~10m</td>
+              <td class="mono-cell">~15m</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+            </tr>
+            <tr>
+              <td class="drug-name-cell">Ondansetron</td>
+              <td>Managing nausea from medications, vomiting</td>
+              <td><span class="route-tag">IV</span><span class="route-tag">IM</span></td>
+              <td class="mono-cell">4mg/2ml · 2mg/ml</td>
+              <td class="mono-cell">4mg, up to 8mg</td>
+              <td class="mono-cell">&lt;15s / &lt;45s</td>
+              <td class="mono-cell">~10m / ~12m</td>
+              <td class="mono-cell">~12m / ~15m</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-down">-</td>
+              <td class="effect-neutral">—</td>
+            </tr>
+            <tr>
+              <td class="drug-name-cell">Calcium Chloride</td>
+              <td>Managing low calcium after blood transfusion</td>
+              <td><span class="route-tag">IV</span></td>
+              <td class="mono-cell">1g/10ml · 100mg/ml</td>
+              <td class="mono-cell">1g after 1st unit, then 1g per 4 units blood</td>
+              <td class="mono-cell">&lt;15s</td>
+              <td class="mono-cell">~5m</td>
+              <td class="mono-cell">~10m</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+            </tr>
+            <tr>
+              <td class="drug-name-cell">Esmolol</td>
+              <td>Lowering heart rate for a short time</td>
+              <td><span class="route-tag">IV</span></td>
+              <td class="mono-cell">100mg/10ml · 10mg/ml</td>
+              <td class="mono-cell">0.25–0.5mg/kg</td>
+              <td class="mono-cell">&lt;20s</td>
+              <td class="mono-cell">~4m</td>
+              <td class="mono-cell">~5m</td>
+              <td class="effect-down">--</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+            </tr>
+            <tr>
+              <td class="drug-name-cell">Ertapenem</td>
+              <td>Managing wound infection, requirement for evacuation</td>
+              <td><span class="route-tag">IV</span><span class="route-tag">IM</span></td>
+              <td class="mono-cell">1g/3.2ml · 312.5mg/ml</td>
+              <td class="mono-cell">1g</td>
+              <td class="mono-cell">&lt;5s / &lt;30s</td>
+              <td class="mono-cell">~10m / ~15m</td>
+              <td class="mono-cell">~15m / ~20m</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+            </tr>
+            <tr>
+              <td class="drug-name-cell">Adenosine</td>
+              <td>Diagnosing / terminating SVT</td>
+              <td><span class="route-tag">IV</span></td>
+              <td class="mono-cell">12mg/4ml · 3mg/ml</td>
+              <td class="mono-cell">6mg</td>
+              <td class="mono-cell">&lt;1m</td>
+              <td class="mono-cell">~25s</td>
+              <td class="mono-cell">&lt;2m</td>
+              <td class="effect-down">--</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+            </tr>
+            <tr>
+              <td class="drug-name-cell">Atropine</td>
+              <td>Nerve agent exposure / increasing heart rate</td>
+              <td><span class="route-tag">IV</span><span class="route-tag">IM</span></td>
+              <td class="mono-cell">1mg/1ml</td>
+              <td class="mono-cell">(Nerve Agent) 2–4mg initial, titrate<br>(Bradycardia) &gt;1mg</td>
+              <td class="mono-cell">&lt;5s / &lt;15s</td>
+              <td class="mono-cell">~10m</td>
+              <td class="mono-cell">~15m</td>
+              <td class="effect-up">+++</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Notes cards below IV table -->
+      <div class="two-col mt24">
+        <div class="card">
+          <div class="card-title">Key Opioid Notes</div>
+          <p><strong>Fentanyl vs Morphine:</strong> Fentanyl has a faster onset (&lt;10s IV) and shorter duration (~16–20 min) than morphine (~21–30 min). Preferred when rapid but short analgesia is needed — e.g., prior to a painful procedure. Morphine provides longer coverage for sustained pain management.</p>
+          <p class="mt8"><strong>Ketamine advantage:</strong> Unlike both opioids, ketamine does not significantly depress HR, BP, or RR at analgesic doses. Use ketamine when the patient has compromised respiratory function or is hemodynamically borderline. It is the preferred agent in hypotensive or airway-compromised casualties.</p>
+          <div class="alert alert-red" style="margin-top:12px;">
+            <span class="alert-icon">!</span>
+            <span>REVERSAL: Naloxone Spray IN reverses opioid overdose (morphine &amp; fentanyl). See Other Medications tab. Give if RR drops below 10 or patient becomes unresponsive after opioid administration.</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Cardiac Arrest Drug Protocol</div>
+          <p><strong>Shockable (VF/pVT):</strong> Defibrillate first. After 3rd shock — Amiodarone 300mg IV. If amiodarone unavailable, Lidocaine 1mg/kg IV is the alternative. Epinephrine 1mg IV every 3–5 minutes throughout.</p>
+          <p class="mt8"><strong>Non-shockable (PEA/Asystole):</strong> Epinephrine 1mg IV as soon as IV/IO access is available. Repeat every 3–5 minutes. Treat reversible causes (Hs and Ts).</p>
+          <div class="alert alert-amber" style="margin-top:12px;">
+            <span class="alert-icon">⚠</span>
+            <span><strong>Amiodarone note:</strong> Can be given up to 2200mg total. Monitor for ↓BP and ↓HR as side effects — common with rapid infusion. Do not give to a patient with a pulse without confirming shockable rhythm.</span>
+          </div>
+          <p class="mt8"><strong>Esmolol</strong> is used to rapidly reduce HR in tachyarrhythmias or post-ROSC rate control. Short acting (~5 min). Not for bradycardia or hypotension.</p>
+          <p class="mt8"><strong>Adenosine</strong> terminates SVT via transient AV node blockade. Give as a rapid IV push followed by a saline flush. Duration is extremely short (&lt;2 min). Inform the patient they will feel a brief sensation of chest pressure/doom — this is expected.</p>
+        </div>
+      </div>
+
+      <div class="two-col mt16">
+        <div class="card">
+          <div class="card-title">TXA — Time-Critical Window</div>
+          <p>Tranexamic acid prevents fibrinolysis (clot breakdown). It must be given <strong>within 3 hours of injury</strong>. After 3 hours, TXA becomes procoagulant and increases mortality — giving it late is actively harmful.</p>
+          <p class="mt8">Dose: <strong>1–2g IV</strong>. Onset &lt;15 seconds. Infuse slowly — rapid push can cause hypotension. Indicated for any patient with significant hemorrhage or who is receiving blood products.</p>
+          <div class="alert alert-amber mt8">
+            <span class="alert-icon">⚠</span>
+            <span>The TXA clock starts at TIME OF INJURY — not time of your arrival. Account for elapsed time before administering.</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Calcium Chloride — Transfusion Protocol</div>
+          <p>Packed red blood cells and FFP are stored with citrate preservative, which chelates (binds) calcium. Giving large volumes of blood products can cause <strong>hypocalcemia</strong>, leading to hypotension and coagulopathy.</p>
+          <p class="mt8"><strong>Protocol:</strong> 1g CaCl₂ IV after the first unit of blood, then 1g for every 4 subsequent units. Give slowly — rapid infusion causes bradycardia. Keep warm if possible; cold CaCl₂ causes vein irritation.</p>
+          <div class="alert alert-blue mt8">
+            <span class="alert-icon">i</span>
+            <span>Signs of hypocalcemia: muscle cramps, perioral tingling, carpopedal spasm, QT prolongation on ECG. Treat promptly — hypocalcemic cardiac arrest is resistant to defibrillation.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OTHER MEDICATIONS -->
+    <div id="drug-tab-other" class="drug-tab-panel" style="display:none;">
+      <div class="pharm-table-wrap">
+        <table class="pharm-table">
+          <thead>
+            <tr>
+              <th>MEDICATION</th>
+              <th>USE</th>
+              <th>ACCESS</th>
+              <th>USES/QTY</th>
+              <th>DOSE</th>
+              <th>ONSET</th>
+              <th>PEAK</th>
+              <th>DURATION</th>
+              <th>HR</th>
+              <th>BP</th>
+              <th>RR</th>
+              <th>PAIN</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="drug-name-cell">Morphine Autoinjector</td>
+              <td>Managing moderate to severe pain</td>
+              <td><span class="route-tag">IM</span></td>
+              <td class="mono-cell">1× · 1 injection</td>
+              <td class="mono-cell">5mg IM equivalent</td>
+              <td class="mono-cell">&lt;2m</td>
+              <td class="mono-cell">~20m</td>
+              <td class="mono-cell">~30m</td>
+              <td class="effect-down">--</td>
+              <td class="effect-down">--</td>
+              <td class="effect-down">--</td>
+              <td class="effect-pain effect-pain-strong">STRONG</td>
+            </tr>
+            <tr>
+              <td class="drug-name-cell">Fentanyl Lozenge (OTFC)</td>
+              <td>Managing severe pain</td>
+              <td><span class="route-tag buc-tag">BUC</span></td>
+              <td class="mono-cell">1× · 1 lozenge</td>
+              <td class="mono-cell">Standard lozenge dose</td>
+              <td class="mono-cell">&lt;2m</td>
+              <td class="mono-cell">~10m</td>
+              <td class="mono-cell">~15m</td>
+              <td class="effect-down">--</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-pain effect-pain-vstrong">VERY STRONG</td>
+            </tr>
+            <tr>
+              <td class="drug-name-cell">Penthrox Inhaler</td>
+              <td>Managing moderate to severe pain short-term</td>
+              <td><span class="route-tag inh-tag">INH</span></td>
+              <td class="mono-cell">8× · 1–5 uses</td>
+              <td class="mono-cell">Per inhaler use</td>
+              <td class="mono-cell">&lt;3s</td>
+              <td class="mono-cell">&lt;90s</td>
+              <td class="mono-cell">~4m</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-pain effect-pain-mod">MODERATE</td>
+            </tr>
+            <tr>
+              <td class="drug-name-cell">Paracetamol</td>
+              <td>Managing mild to moderate pain</td>
+              <td><span class="route-tag po-tag">PO</span></td>
+              <td class="mono-cell">10× · 1–2 pills</td>
+              <td class="mono-cell">500–1000mg</td>
+              <td class="mono-cell">&lt;4m</td>
+              <td class="mono-cell">~15m</td>
+              <td class="mono-cell">~50m</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-pain effect-pain-weak">WEAK</td>
+            </tr>
+            <tr>
+              <td class="drug-name-cell">Naloxone Spray</td>
+              <td>Reversing opioid overdose</td>
+              <td><span class="route-tag in-tag">IN</span></td>
+              <td class="mono-cell">1× · 1–2 uses</td>
+              <td class="mono-cell">Per spray</td>
+              <td class="mono-cell">&lt;3s</td>
+              <td class="mono-cell">~2m</td>
+              <td class="mono-cell">~6m</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+            </tr>
+            <tr>
+              <td class="drug-name-cell">Ammonia Inhalant</td>
+              <td>Waking up patients</td>
+              <td><span class="route-tag in-tag">IN</span></td>
+              <td class="mono-cell">8× · 1 use</td>
+              <td class="mono-cell">Single ampule crush</td>
+              <td class="mono-cell">&lt;3s</td>
+              <td class="mono-cell">&lt;6s</td>
+              <td class="mono-cell">&lt;40s</td>
+              <td class="effect-up">+++</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+            </tr>
+            <tr class="drug-row-cardiac">
+              <td class="drug-name-cell">Epinephrine Autoinjector (EpiPen)</td>
+              <td>Anaphylaxis / severe allergic reaction</td>
+              <td><span class="route-tag">IM</span></td>
+              <td class="mono-cell">1× · 1 injection</td>
+              <td class="mono-cell">0.3mg IM (standard adult)</td>
+              <td class="mono-cell">&lt;30s</td>
+              <td class="mono-cell">~4m</td>
+              <td class="mono-cell">~7m</td>
+              <td class="effect-up">+++</td>
+              <td class="effect-up">+++</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+            </tr>
+            <tr>
+              <td class="drug-name-cell">ATNA Autoinjector</td>
+              <td>Treating nerve agent exposure</td>
+              <td><span class="route-tag">IM</span></td>
+              <td class="mono-cell">1× · 2–3 injections</td>
+              <td class="mono-cell">2–3 initial; titrate to effect</td>
+              <td class="mono-cell">&lt;15s</td>
+              <td class="mono-cell">~10m</td>
+              <td class="mono-cell">~15m</td>
+              <td class="effect-up">+++</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+            </tr>
+            <tr>
+              <td class="drug-name-cell">Midazolam Autoinjector</td>
+              <td>Managing seizures from nerve agent exposure</td>
+              <td><span class="route-tag">IM</span></td>
+              <td class="mono-cell">1× · 1 injection</td>
+              <td class="mono-cell">5–10mg IM</td>
+              <td class="mono-cell">&lt;30s</td>
+              <td class="mono-cell">~15m</td>
+              <td class="mono-cell">~20m</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-down">--</td>
+              <td class="effect-neutral">—</td>
+              <td class="effect-neutral">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Notes below Other tab -->
+      <div class="two-col mt24">
+        <div class="card">
+          <div class="card-title">Penthrox &amp; OTFC — Rapid Analgesia</div>
+          <p><strong>Penthrox (methoxyflurane inhaler):</strong> Fastest acting analgesic in the kit — onset under 3 seconds. Self-administered by the patient. Limited to 8 uses per inhaler. Primarily used for short painful procedures (wound packing, splinting) or transport pain management. Does not affect hemodynamics. Not a replacement for IV analgesia in severe pain.</p>
+          <p class="mt8"><strong>Fentanyl OTFC (oral transmucosal fentanyl citrate):</strong> Buccal absorption — patient rubs the lozenge against the cheek mucosa; do not chew or swallow. Onset ~2 min, peak ~10 min. Useful when IV access is not yet established. Monitor for respiratory depression. Naloxone spray is the reversal agent.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Nerve Agent Antidotes — ATNA &amp; Midazolam</div>
+          <p><strong>ATNA Autoinjector</strong> contains both Atropine and Pralidoxime (2-PAM). Atropine counteracts the muscarinic effects of organophosphates (SLUDGE: Salivation, Lacrimation, Urination, Defecation, GI distress, Emesis). Pralidoxime reactivates acetylcholinesterase before it "ages." Give 2–3 injections initially; titrate to drying of secretions.</p>
+          <p class="mt8"><strong>Midazolam Autoinjector</strong> is given concurrently to terminate nerve-agent-induced seizures. Benzodiazepines are first-line for organophosphate seizures. Monitor airway after injection — midazolam causes respiratory depression and hypotension. Position in recovery position if unmonitored.</p>
+          <div class="alert alert-red mt8">
+            <span class="alert-icon">!</span>
+            <span>Nerve agent treatment sequence: ATNA first (2–3 injections) → Midazolam if seizures present → Reassess secretions → Additional ATNA if needed. Do not wait for a full symptom picture — treat early.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col mt16">
+        <div class="card">
+          <div class="card-title">Naloxone — Opioid Reversal</div>
+          <p>Naloxone (Narcan) is a competitive opioid antagonist. It rapidly reverses respiratory depression, sedation, and analgesia from morphine, fentanyl, and all other opioids. Duration is ~6 minutes — shorter than most opioids.</p>
+          <div class="alert alert-amber mt8">
+            <span class="alert-icon">⚠</span>
+            <span><strong>Renarcotization risk:</strong> Naloxone wears off before the opioid does. A patient who wakes up may re-sedate 6–10 minutes later. Repeat dosing may be required. Monitor continuously after administration.</span>
+          </div>
+          <p class="mt8">Administer if: RR &lt; 10, patient unresponsive after opioid administration, SpO₂ declining without airway cause. Pinpoint pupils + respiratory depression + opioid history = classic triad.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Ammonia Inhalant — Patient Arousal</div>
+          <p>Ammonia inhalants (smelling salts) cause a reflexive withdrawal response that briefly increases sympathetic tone — HR and arousal increase transiently. Used to rouse a briefly unconscious or stunned patient.</p>
+          <div class="alert alert-blue mt8">
+            <span class="alert-icon">i</span>
+            <span>Ammonia inhalants do <strong>not</strong> treat the underlying cause of unconsciousness. If a patient does not rouse, or rouses only briefly before becoming unresponsive again, a serious cause (TBI, hemorrhagic shock, airway) must be urgently identified.</span>
+          </div>
+          <p class="mt8">Do not use on patients with facial trauma, suspected inhalation injury, or known airway compromise. The involuntary inhalation can worsen airway swelling.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- SECTION: CARDIAC ARREST -->
+  <section id="cardiac" class="section">
+    <div class="section-label">05 // RESUSCITATION</div>
+    <div class="section-title">Cardiac Arrest Management</div>
+
+    <p>In trauma, cardiac arrest is almost always from a <strong>reversible cause</strong>. The Hs and Ts framework identifies these. Do not waste time on CPR alone — find and fix the underlying cause simultaneously.</p>
+
+    <div class="two-col mt24">
+      <div class="card">
+        <div class="card-title"><span class="icon">H</span> The Hs — Reversible Causes</div>
+        <table class="data-table">
+          <tr><th>H CAUSE</th><th>IDENTIFICATION</th><th>TREATMENT</th></tr>
+          <tr><td><strong>Hypovolemia</strong></td><td>Hemorrhage, dehydration. Most common in trauma.</td><td>Fluid/blood resuscitation, hemorrhage control</td></tr>
+          <tr><td><strong>Hypoxia</strong></td><td>Cyanosis, SpO₂ &lt; 90%, airway obstruction</td><td>Open airway, oxygen, intubation</td></tr>
+          <tr><td><strong>H⁺ (Acidosis)</strong></td><td>History of hypoperfusion, EtCO₂ decline</td><td>Correct underlying cause, sodium bicarb if severe</td></tr>
+          <tr><td><strong>Hypothermia</strong></td><td>Temp &lt; 30°C, cold patient</td><td>Aggressive rewarming, warm fluids. CPR until warm.</td></tr>
+          <tr><td><strong>Hypoglycemia</strong></td><td>Glucose &lt; 60 mg/dL, altered mental status</td><td>D50W 50 mL IV push</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="icon">T</span> The Ts — Reversible Causes</div>
+        <table class="data-table">
+          <tr><th>T CAUSE</th><th>IDENTIFICATION</th><th>TREATMENT</th></tr>
+          <tr><td><strong>Tension Pneumo</strong></td><td>Absent breath sounds, tracheal deviation, JVD</td><td>Needle decompression immediately</td></tr>
+          <tr><td><strong>Tamponade</strong></td><td>Beck's triad: JVD + muffled heart sounds + hypotension</td><td>Pericardiocentesis (hospital-level)</td></tr>
+          <tr><td><strong>Toxins</strong></td><td>Known exposure, history, drug levels</td><td>Specific antidote / supportive care</td></tr>
+          <tr><td><strong>Thrombosis</strong></td><td>PE: sudden dyspnea, pleuritic chest pain</td><td>Fibrinolytics, surgical embolectomy</td></tr>
+          <tr><td><strong>Trauma</strong></td><td>Obvious traumatic mechanism</td><td>Hemorrhage control, surgical intervention</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card mt24">
+      <div class="card-title">Cardiac Arrest Algorithm (ACM Protocol)</div>
+      <div class="two-col">
+        <ul class="step-list">
+          <li><span class="step-num">1</span><div><strong>Confirm cardiac arrest</strong><p>No carotid pulse for 10 seconds. Unresponsive, apneic. Call it.</p></div></li>
+          <li><span class="step-num">2</span><div><strong>Begin high-quality CPR</strong><p>100–120 compressions/min. Depth: 5–6 cm. Full chest recoil. Minimize interruptions. 30:2 ratio (unventilated) or continuous with airway secured.</p></div></li>
+          <li><span class="step-num">3</span><div><strong>Secure the airway</strong><p>BVM ventilation with high-flow O₂ during CPR. Intubate when able without stopping compressions.</p></div></li>
+          <li><span class="step-num">4</span><div><strong>Epinephrine 1 mg IV/IO q3–5 min</strong><p>Give after second cycle of CPR. Repeat every 3–5 minutes throughout resuscitation.</p></div></li>
+        </ul>
+        <ul class="step-list">
+          <li><span class="step-num">5</span><div><strong>Identify reversible causes (Hs and Ts)</strong><p>Simultaneously diagnose and treat while CPR continues. In trauma: rule out tension pneumo and massive hemorrhage first.</p></div></li>
+          <li><span class="step-num">6</span><div><strong>Reassess rhythm every 2 minutes</strong><p>Minimize pause to &lt; 10 seconds. Shockable (VF/pVT): defibrillate 200J biphasic, resume CPR immediately. Non-shockable (PEA/asystole): continue CPR, treat reversible causes.</p></div></li>
+          <li><span class="step-num">7</span><div><strong>Monitor EtCO₂ for ROSC</strong><p>EtCO₂ &lt; 10 during CPR = poor prognosis. Sudden rise to &gt; 40 = ROSC. Check pulse immediately.</p></div></li>
+          <li><span class="step-num">8</span><div><strong>Post-ROSC care</strong><p>SpO₂ 94–98%, SBP ≥ 90, identify and treat cause. Start targeted temperature management if unconscious.</p></div></li>
+        </ul>
+      </div>
+      <div class="alert alert-amber mt8">
+        <span class="alert-icon">⚠</span>
+        <span><strong>Traumatic cardiac arrest rule:</strong> In penetrating trauma, resuscitative thoracotomy (open cardiac massage) is indicated within 15 minutes of witnessed arrest. In blunt trauma, survival from arrest is extremely low. Consider cessation of efforts after 10 minutes of CPR with no reversible cause found and no ROSC.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: MEDEVAC -->
+  <section id="medevac" class="section">
+    <div class="section-label">06 // EVACUATION</div>
+    <div class="section-title">MEDEVAC & 9-Line Request</div>
+
+    <p>Medical evacuation requires precise communication. The 9-line format ensures MEDEVAC crews have everything they need before they arrive. Memorize this. A garbled 9-line gets good people killed.</p>
+
+    <div class="two-col mt16">
+      <div>
+        <div class="nine-line">
+          <div class="nine-line-row">
+            <div class="nl-num">1</div>
+            <div class="nl-content">
+              <div class="nl-field">Location of Pickup Site</div>
+              <div class="nl-desc">Grid coordinate (8-digit MGRS) of the PZ</div>
+              <div class="nl-example">EX: "Papa Zulu at grid 38T PL 12345 67890"</div>
+            </div>
+          </div>
+          <div class="nine-line-row">
+            <div class="nl-num">2</div>
+            <div class="nl-content">
+              <div class="nl-field">Radio Frequency &amp; Call Sign</div>
+              <div class="nl-desc">Primary frequency and unit call sign at PZ</div>
+              <div class="nl-example">EX: "152.450, call sign DEVIL DOC 6"</div>
+            </div>
+          </div>
+          <div class="nine-line-row">
+            <div class="nl-num">3</div>
+            <div class="nl-content">
+              <div class="nl-field">Number of Casualties by Precedence</div>
+              <div class="nl-desc">A=Urgent (2hr), B=Urgent Surgical (2hr/OR), C=Priority (4hr), D=Routine (24hr), E=Convenience</div>
+              <div class="nl-example">EX: "2 Alpha, 1 Charlie" (2 urgent, 1 priority)</div>
+            </div>
+          </div>
+          <div class="nine-line-row">
+            <div class="nl-num">4</div>
+            <div class="nl-content">
+              <div class="nl-field">Special Equipment Required</div>
+              <div class="nl-desc">A=None, B=Hoist, C=Extraction, D=Ventilator</div>
+              <div class="nl-example">EX: "Alpha" (no special equipment)</div>
+            </div>
+          </div>
+          <div class="nine-line-row">
+            <div class="nl-num">5</div>
+            <div class="nl-content">
+              <div class="nl-field">Number of Patients by Type</div>
+              <div class="nl-desc">L=Litter (non-ambulatory), A=Ambulatory</div>
+              <div class="nl-example">EX: "2 Litter, 1 Ambulatory"</div>
+            </div>
+          </div>
+          <div class="nine-line-row">
+            <div class="nl-num">6</div>
+            <div class="nl-content">
+              <div class="nl-field">Security at Pickup Site</div>
+              <div class="nl-desc">N=No enemy, P=Possibly enemy, E=Enemy in area, X=Armed escort required</div>
+              <div class="nl-example">EX: "Papa" (possible enemy)</div>
+            </div>
+          </div>
+          <div class="nine-line-row">
+            <div class="nl-num">7</div>
+            <div class="nl-content">
+              <div class="nl-field">Method of Marking PZ</div>
+              <div class="nl-desc">A=Panels, B=Pyrotechnic, C=Smoke, D=None, E=Other (NVG, IR strobe)</div>
+              <div class="nl-example">EX: "Charlie, Yellow" (yellow smoke)</div>
+            </div>
+          </div>
+          <div class="nine-line-row">
+            <div class="nl-num">8</div>
+            <div class="nl-content">
+              <div class="nl-field">Patient Nationality &amp; Status</div>
+              <div class="nl-desc">A=US Military, B=US Civilian, C=Non-US Military, D=Non-US Civilian, E=EPW</div>
+              <div class="nl-example">EX: "3 Alpha" (3 US Military)</div>
+            </div>
+          </div>
+          <div class="nine-line-row">
+            <div class="nl-num">9</div>
+            <div class="nl-content">
+              <div class="nl-field">NBC Contamination</div>
+              <div class="nl-desc">N=Nuclear, B=Biological, C=Chemical — or NONE</div>
+              <div class="nl-example">EX: "None" (no NBC)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-title">Casualty Precedence Guide</div>
+          <table class="data-table">
+            <tr><th>PRECEDENCE</th><th>DEFINITION</th><th>EVACUATION WINDOW</th></tr>
+            <tr><td><span class="val-crit">URGENT (A)</span></td><td>Will die or lose limb without immediate evacuation</td><td><strong class="red">Within 2 hours</strong></td></tr>
+            <tr><td><span class="val-crit">URGENT-SURGICAL (B)</span></td><td>Requires immediate surgery unavailable in field</td><td><strong class="red">Within 2 hours (OR)</strong></td></tr>
+            <tr><td><span class="val-warn">PRIORITY (C)</span></td><td>Significant wounds; will deteriorate without treatment</td><td><strong class="amber">Within 4 hours</strong></td></tr>
+            <tr><td><span class="val-normal">ROUTINE (D)</span></td><td>Stable wounds not causing immediate risk</td><td><strong class="green">Within 24 hours</strong></td></tr>
+            <tr><td>CONVENIENCE (E)</td><td>Administrative/logistical — not medical priority</td><td>As available</td></tr>
+          </table>
+        </div>
+
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-title">CASEVAC vs. MEDEVAC</div>
+          <div class="two-col">
+            <div>
+              <p style="color:var(--amber); font-weight:600; margin-bottom:6px;">CASEVAC</p>
+              <p>Non-medical vehicle. Any available asset — truck, helicopter, APC. No medical personnel or equipment onboard. Used when MEDEVAC is unavailable or situation demands immediate extraction over medical care.</p>
+            </div>
+            <div>
+              <p style="color:var(--green); font-weight:600; margin-bottom:6px;">MEDEVAC</p>
+              <p>Dedicated medical evacuation. Protected under Geneva Convention — marked with red cross. Medical personnel and equipment onboard. MEDEVAC aircraft cannot engage the enemy without losing protected status.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Patient Handoff (MIST Report)</div>
+          <p>When transferring care to MEDEVAC crew or higher echelon:</p>
+          <ul class="step-list mt8">
+            <li><span class="step-num">M</span><div><strong>Mechanism of injury</strong><p>GSW, blast, blunt trauma, fall. Direction, distance, caliber if known.</p></div></li>
+            <li><span class="step-num">I</span><div><strong>Injuries sustained</strong><p>List all known injuries from head to toe. Note suspected injuries not yet confirmed.</p></div></li>
+            <li><span class="step-num">S</span><div><strong>Signs and vital signs</strong><p>Current HR, BP, SpO₂, GCS, RR, temperature. Trend — improving or deteriorating?</p></div></li>
+            <li><span class="step-num">T</span><div><strong>Treatment administered</strong><p>Everything given: tourniquets (TIME), medications (dose, route, time), IV access, procedures. TK time is mandatory.</p></div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: ASSESSMENT TOOL -->
+  <section id="assessment" class="section">
+    <div class="section-label">07 // INTERACTIVE TOOL</div>
+    <div class="section-title">Patient Assessment Tool</div>
+
+    <p>Enter the patient's current vital signs. The tool will assess their hemodynamic status, identify potential diagnoses, and generate a prioritized treatment recommendation.</p>
+
+    <div class="two-col mt16">
+      <div class="card">
+        <div class="card-title">Enter Patient Vitals</div>
+        <div class="assess-grid">
+          <div class="assess-input">
+            <label>HEART RATE (BPM)</label>
+            <input type="number" id="a-hr" placeholder="e.g. 110" min="0" max="300">
+          </div>
+          <div class="assess-input">
+            <label>SBP (mmHg)</label>
+            <input type="number" id="a-sbp" placeholder="e.g. 88" min="0" max="300">
+          </div>
+          <div class="assess-input">
+            <label>SpO₂ (%)</label>
+            <input type="number" id="a-spo2" placeholder="e.g. 94" min="0" max="100">
+          </div>
+          <div class="assess-input">
+            <label>RESP RATE (br/min)</label>
+            <input type="number" id="a-rr" placeholder="e.g. 22" min="0" max="60">
+          </div>
+          <div class="assess-input">
+            <label>GCS (3–15)</label>
+            <input type="number" id="a-gcs" placeholder="e.g. 13" min="3" max="15">
+          </div>
+          <div class="assess-input">
+            <label>TEMP (°C)</label>
+            <input type="number" id="a-temp" placeholder="e.g. 35.5" step="0.1" min="20" max="45">
+          </div>
+          <div class="assess-input" style="grid-column: 1/-1;">
+            <label>BLEEDING STATUS</label>
+            <select id="a-bleed">
+              <option value="none">No active bleeding</option>
+              <option value="controlled">Bleeding controlled (TK/pressure)</option>
+              <option value="active">Active uncontrolled bleeding</option>
+              <option value="massive">Massive hemorrhage / amputation</option>
+            </select>
+          </div>
+        </div>
+        <button class="assess-btn" onclick="runAssessment()">▶ RUN ASSESSMENT</button>
+        <div id="assess-result" class="assess-result"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Corpsman Decision Framework</div>
+        <p>Every medical decision must answer these three questions — in order, every time:</p>
+        <ul class="step-list mt16">
+          <li><span class="step-num">1</span><div><strong style="color:var(--red);">What is killing this patient right now?</strong><p>Is it hemorrhage? Airway obstruction? Tension pneumo? Cardiac arrest? Identify the most immediate threat to life before doing anything else.</p></div></li>
+          <li><span class="step-num">2</span><div><strong style="color:var(--amber);">What can I fix immediately?</strong><p>What do you have? What skills do you have? What interventions are within your capability at this location and with these resources? Do those things first.</p></div></li>
+          <li><span class="step-num">3</span><div><strong style="color:var(--green);">Is the patient improving or deteriorating?</strong><p>After every intervention, reassess. If deteriorating despite treatment — you missed something. Go back to the beginning of MARCH.</p></div></li>
+        </ul>
+        <div class="alert alert-amber mt16">
+          <span class="alert-icon">⚠</span>
+          <span>A medic who doesn't reassess is not treating a patient — they're treating a snapshot. Patients change. Stay vigilant.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: QUICK REFERENCE -->
+  <section id="quickref" class="section">
+    <div class="section-label">08 // REFERENCE</div>
+    <div class="section-title">Quick Reference Guides</div>
+
+    <div class="accordion open" id="acc-pfc">
+      <div class="accordion-head" onclick="toggleAccordion('acc-pfc')">
+        Prolonged Field Care (PFC) Protocol
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body">
+        <p>PFC is initiated when evacuation is delayed beyond 60 minutes. Continuous monitoring and aggressive supportive care prevent preventable death in the field.</p>
+        <div class="two-col mt16">
+          <div>
+            <p style="color:#fff; font-weight:600; margin-bottom:10px;">PFC Goals:</p>
+            <ul class="step-list">
+              <li><span class="step-num">→</span><span>Definitively control hemorrhage (all wounds packed, TKs assessed)</span></li>
+              <li><span class="step-num">→</span><span>Maintain patent, protected airway — intubate or NPA if required</span></li>
+              <li><span class="step-num">→</span><span>Prevent hemorrhagic shock — SBP 80–90 mmHg</span></li>
+              <li><span class="step-num">→</span><span>Aggressive pain management — ketamine preferred</span></li>
+              <li><span class="step-num">→</span><span>Antibiotic prophylaxis — prevent wound infection</span></li>
+              <li><span class="step-num">→</span><span>Hypothermia prevention — warm, dry, shielded from elements</span></li>
+              <li><span class="step-num">→</span><span>Maintain urine output ≥ 0.5 mL/kg/hr (monitor if Foley placed)</span></li>
+            </ul>
+          </div>
+          <div>
+            <p style="color:#fff; font-weight:600; margin-bottom:10px;">Monitoring Schedule:</p>
+            <table class="data-table">
+              <tr><th>PATIENT STATUS</th><th>REASSESS INTERVAL</th></tr>
+              <tr><td class="val-crit">Unstable</td><td>Every 5 minutes</td></tr>
+              <tr><td class="val-warn">Improving</td><td>Every 10 minutes</td></tr>
+              <tr><td class="val-normal">Stable</td><td>Every 15 minutes</td></tr>
+            </table>
+            <p class="mt16"><strong>Documentation during PFC:</strong> Every vital sign, every medication, every procedure, every time. This follows the patient to higher care and informs decisions at the next echelon. Without documentation, you are starting from zero.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion" id="acc-io">
+      <div class="accordion-head" onclick="toggleAccordion('acc-io')">
+        Intraosseous (IO) Access
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body">
+        <p>Intraosseous access provides a non-collapsible vascular route in cardiac arrest or severe shock where peripheral IVs have failed. IO delivers drugs and fluids as fast as IV.</p>
+        <div class="two-col mt16">
+          <div>
+            <p style="color:#fff; font-weight:600; margin-bottom:10px;">Common IO sites:</p>
+            <ul class="step-list">
+              <li><span class="step-num">1</span><div><strong>Proximal tibia (preferred)</strong><p>2 cm below and medial to the tibial tuberosity. Flat medial surface. Largest marrow space. Fastest flow rates.</p></div></li>
+              <li><span class="step-num">2</span><div><strong>Proximal humerus</strong><p>Greater tubercle. Higher flow rates than tibia. Preferred for large volume resuscitation. Requires arm adduction.</p></div></li>
+              <li><span class="step-num">3</span><div><strong>Sternal (FAST1)</strong><p>Manubrium. Only in adults. Largest marrow space but requires dedicated sternal device.</p></div></li>
+            </ul>
+          </div>
+          <div>
+            <p style="color:#fff; font-weight:600; margin-bottom:10px;">IO procedure (EZ-IO drill):</p>
+            <ul class="step-list">
+              <li><span class="step-num">1</span><span>Identify landmark and prepare site (betadine/chlorhexidine)</span></li>
+              <li><span class="step-num">2</span><span>Select needle size: 15 mm (standard adult), 25 mm (obese)</span></li>
+              <li><span class="step-num">3</span><span>Stabilize limb. Insert at 90° to bone with moderate pressure</span></li>
+              <li><span class="step-num">4</span><span>Drill until decreased resistance ("give") felt</span></li>
+              <li><span class="step-num">5</span><span>Confirm: flush 10 mL NS, no swelling, low resistance</span></li>
+              <li><span class="step-num">6</span><span>Infuse lidocaine 40 mg IO before drug/fluid administration (for conscious patient)</span></li>
+              <li><span class="step-num">7</span><span>Use pressure bag ≥ 300 mmHg for fluid boluses — passive drip is too slow</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion" id="acc-etco2">
+      <div class="accordion-head" onclick="toggleAccordion('acc-etco2')">
+        EtCO₂ Monitoring &amp; Interpretation
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body">
+        <p>End-tidal CO₂ (capnography) provides continuous, real-time feedback on ventilation AND perfusion. It is the most sensitive indicator of ROSC during CPR and the best tool to confirm correct intubation tube placement.</p>
+        <div class="two-col mt16">
+          <div>
+            <table class="data-table">
+              <tr><th>EtCO₂ VALUE</th><th>INTERPRETATION</th><th>ACTION</th></tr>
+              <tr><td class="val-normal">35–45 mmHg</td><td>Normal ventilation and perfusion</td><td>Continue current management</td></tr>
+              <tr><td class="val-warn">&lt; 35 mmHg</td><td>Hyperventilation or reduced perfusion</td><td>Reduce RR, reassess perfusion</td></tr>
+              <tr><td class="val-warn">&gt; 45 mmHg</td><td>Hypoventilation / CO₂ retention</td><td>Increase ventilatory rate/volume</td></tr>
+              <tr><td class="val-crit">&lt; 20 mmHg</td><td>Very poor perfusion / CPR in progress</td><td>Improve CPR quality, treat reversible causes</td></tr>
+              <tr><td class="val-crit">10–20 mmHg</td><td>Cardiac arrest range during CPR</td><td>Continue CPR, epinephrine</td></tr>
+              <tr><td class="val-normal">Sudden rise &gt; 35–40</td><td>Return of Spontaneous Circulation (ROSC)</td><td>CHECK PULSE IMMEDIATELY</td></tr>
+              <tr><td class="val-crit">Sudden drop to near-zero</td><td>Tube displacement / airway loss</td><td>Confirm tube placement NOW</td></tr>
+            </table>
+          </div>
+          <div>
+            <p style="color:#fff; font-weight:600; margin-bottom:10px;">Waveform interpretation:</p>
+            <p>A normal capnography waveform has four distinct phases. Loss of the characteristic shape indicates a problem:</p>
+            <ul class="step-list mt8">
+              <li><span class="step-num">→</span><span><strong>Absent waveform:</strong> tube in esophagus, disconnection, no cardiac output</span></li>
+              <li><span class="step-num">→</span><span><strong>Shark-fin shape:</strong> bronchospasm or COPD — expiration is prolonged</span></li>
+              <li><span class="step-num">→</span><span><strong>Declining baseline:</strong> CO₂ absorber exhausted or calibration error</span></li>
+              <li><span class="step-num">→</span><span><strong>Oscillating baseline:</strong> cardiac oscillations — common in brady patients</span></li>
+            </ul>
+            <div class="alert alert-green mt16">
+              <span class="alert-icon">✓</span>
+              <span>Intubation confirmation: consistent EtCO₂ waveform through 6 breaths confirms tracheal placement. EtCO₂ is more reliable than watching chest rise or listening to breath sounds.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion" id="acc-triage">
+      <div class="accordion-head" onclick="toggleAccordion('acc-triage')">
+        Mass Casualty Triage (START / SALT)
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body">
+        <p>When casualties outnumber medics, triage determines the order of treatment. The goal is the greatest good for the greatest number. Individual patient care gives way to population-level care.</p>
+        <div class="two-col mt16">
+          <div>
+            <p style="color:#fff; font-weight:600; margin-bottom:10px;">START Triage (30-second assessment):</p>
+            <ul class="step-list">
+              <li><span class="step-num">1</span><div><strong>Walk? → GREEN (Minor)</strong><p>If ambulatory, tag green. Send them to collect point. They wait.</p></div></li>
+              <li><span class="step-num">2</span><div><strong>Breathing?</strong><p>If not breathing: open airway. Still not breathing → BLACK (Expectant). Breathing after maneuver → RED.</p></div></li>
+              <li><span class="step-num">3</span><div><strong>Resp Rate &gt; 30 or &lt; 10?</strong><p>Yes → RED. Rate outside range is a critical sign.</p></div></li>
+              <li><span class="step-num">4</span><div><strong>Radial pulse absent or cap refill &gt; 2 sec?</strong><p>Yes → RED (control hemorrhage, move on).</p></div></li>
+              <li><span class="step-num">5</span><div><strong>Cannot follow simple commands?</strong><p>Yes → RED. No → YELLOW (Delayed).</p></div></li>
+            </ul>
+          </div>
+          <div>
+            <p style="color:#fff; font-weight:600; margin-bottom:10px;">Triage Tags:</p>
+            <table class="data-table">
+              <tr>
+                <td style="background:var(--red-dark); color:var(--red); font-weight:700;">RED</td>
+                <td><strong>Immediate.</strong> Life-threatening, survivable with immediate care. Treat first.</td>
+              </tr>
+              <tr>
+                <td style="background:var(--amber-dark); color:var(--amber); font-weight:700;">YELLOW</td>
+                <td><strong>Delayed.</strong> Serious but can wait. Will not immediately die without treatment.</td>
+              </tr>
+              <tr>
+                <td style="background:var(--green-dark); color:var(--green); font-weight:700;">GREEN</td>
+                <td><strong>Minor.</strong> Walking wounded. Self-care or buddy care. Last priority.</td>
+              </tr>
+              <tr>
+                <td style="background:#111; color:var(--text3); font-weight:700;">BLACK</td>
+                <td><strong>Expectant.</strong> Non-survivable injuries OR no resources to save. Comfort care only.</td>
+              </tr>
+            </table>
+            <div class="alert alert-red mt16">
+              <span class="alert-icon">!</span>
+              <span>The hardest skill in MASCAL is tagging someone BLACK. An expectant patient with scarce resources will cost lives saved. This is doctrine — not abandonment.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- SECTION: IV ACCESS & FLUID RESUSCITATION -->
+  <section id="ivaccess" class="section">
+    <div class="section-label">09 // VASCULAR ACCESS & FLUIDS</div>
+    <div class="section-title">IV Access & Fluid Resuscitation</div>
+
+    <p>Establishing vascular access is a fundamental skill. In a patient who is bleeding out, every second without IV access is a second without volume replacement. Know the sites, know the technique, know when to escalate to IO.</p>
+
+    <div class="two-col mt24">
+      <div class="card">
+        <div class="card-title">Peripheral IV Access — Site Selection</div>
+        <table class="data-table">
+          <tr><th>SITE</th><th>GAUGE</th><th>FLOW RATE</th><th>NOTES</th></tr>
+          <tr><td><strong>Antecubital (AC)</strong></td><td class="val-normal">14–16g</td><td class="val-normal">Fastest</td><td>First choice in trauma. Large vein, easy landmark, highest flow rate.</td></tr>
+          <tr><td><strong>Forearm</strong></td><td>16–18g</td><td>Good</td><td>Backup if AC unavailable. Cephalic and basilic veins.</td></tr>
+          <tr><td><strong>External jugular</strong></td><td>16–18g</td><td>Good</td><td>Use in shock when peripheral veins collapsed. Patient supine, head turned away. High success rate.</td></tr>
+          <tr><td><strong>Hand / wrist</strong></td><td>18–20g</td><td>Slow</td><td>Last resort for peripheral access. Small caliber — not suitable for rapid volume.</td></tr>
+          <tr><td><strong class="red">Femoral</strong></td><td>14–16g</td><td>Good</td><td>Avoid in trauma — may be injured. Infection risk. Use only if all else fails.</td></tr>
+        </table>
+        <div class="alert alert-amber mt8">
+          <span class="alert-icon">⚠</span>
+          <span>In hypovolemic shock, veins collapse. Warm the limb, use a tourniquet as a venous constriction band, and tap the vein to dilate it. Two failed attempts → go IO immediately. Do not waste time.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">IV Catheter Size & Flow</div>
+        <p>Flow rate through a catheter is governed by Poiseuille's Law — flow increases with the 4th power of the radius. A 14g catheter flows dramatically faster than an 18g.</p>
+        <table class="data-table mt8">
+          <tr><th>GAUGE</th><th>COLOR</th><th>APPROX FLOW</th><th>USE CASE</th></tr>
+          <tr><td class="val-normal"><strong>14g</strong></td><td style="color:#e87040;">Orange</td><td class="val-normal">~330 mL/min</td><td>Major trauma, rapid transfusion</td></tr>
+          <tr><td class="val-normal"><strong>16g</strong></td><td style="color:#c0c0c0;">Grey</td><td class="val-normal">~200 mL/min</td><td>Trauma, blood products</td></tr>
+          <tr><td class="val-warn"><strong>18g</strong></td><td style="color:#40a840;">Green</td><td class="val-warn">~100 mL/min</td><td>Medications, moderate fluids</td></tr>
+          <tr><td class="val-warn"><strong>20g</strong></td><td style="color:#e8c040;">Pink</td><td class="val-warn">~60 mL/min</td><td>Standard IV medications</td></tr>
+          <tr><td class="val-crit"><strong>22g</strong></td><td style="color:#4080e8;">Blue</td><td class="val-crit">~35 mL/min</td><td>Pediatric / fragile veins</td></tr>
+        </table>
+        <div class="alert alert-green mt8">
+          <span class="alert-icon">✓</span>
+          <span>In trauma: always use the largest bore catheter you can place. Upsizing from 18g to 14g gives you 5x the flow rate. In a hemorrhage patient this is the difference between keeping up with losses and falling behind.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col mt16">
+      <div class="card">
+        <div class="card-title">Blood Product Administration</div>
+        <p>In ACM, whole blood and blood products are the gold standard for hemorrhagic shock resuscitation. Saline and crystalloids dilute clotting factors and worsen the lethal triad.</p>
+        <ul class="step-list mt8">
+          <li><span class="step-num">1</span><div><strong>Whole Blood (WB) — First choice</strong><p>Contains RBCs, plasma, and platelets. Best 1:1:1 ratio by default. Replaces what the patient is losing. Not always available — know your kit inventory.</p></div></li>
+          <li><span class="step-num">2</span><div><strong>Packed Red Blood Cells (pRBC) + Fresh Frozen Plasma (FFP)</strong><p>Give in a 1:1 ratio. RBCs carry oxygen; FFP replaces clotting factors. Without FFP, transfusing RBCs alone dilutes clotting factors further.</p></div></li>
+          <li><span class="step-num">3</span><div><strong>Normal Saline / Hartmann's — Last resort</strong><p>Appropriate for Class I–II hemorrhage as a bridge. In Class III–IV, crystalloids worsen coagulopathy, dilute clotting factors, and cause hyperchloremic acidosis. Use minimum volume necessary to maintain SBP 80–90.</p></div></li>
+        </ul>
+        <div class="alert alert-blue mt8">
+          <span class="alert-icon">i</span>
+          <span><strong>Calcium Chloride protocol:</strong> Give 1g IV after the first unit of blood, then 1g per every 4 units thereafter. Citrate in stored blood chelates calcium — hypocalcemia causes cardiac dysfunction and worsens coagulopathy.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Fluid Rates & Permissive Hypotension</div>
+        <p>Traditional "flood the patient" resuscitation is harmful in uncontrolled hemorrhage. Modern damage control resuscitation targets <strong>permissive hypotension</strong> — keeping the patient just perfusing until hemorrhage is surgically controlled.</p>
+        <table class="data-table mt8">
+          <tr><th>PATIENT CONTEXT</th><th>TARGET SBP</th><th>RATIONALE</th></tr>
+          <tr><td>Hemorrhagic shock, uncontrolled bleeding</td><td class="val-warn">80–90 mmHg</td><td>Higher pressure blows out forming clots</td></tr>
+          <tr><td>Traumatic brain injury (TBI)</td><td class="val-normal">≥ 90 mmHg</td><td>Brain requires higher perfusion pressure</td></tr>
+          <tr><td>Post-hemorrhage control / stable</td><td class="val-normal">≥ 90 mmHg</td><td>Normal resuscitation target once bleeding stopped</td></tr>
+          <tr><td>Penetrating cardiac injury</td><td class="val-warn">60–70 mmHg</td><td>Lowest survivable — keep perfusing vital organs only</td></tr>
+        </table>
+        <div class="alert alert-red mt8">
+          <span class="alert-icon">!</span>
+          <span>Never use permissive hypotension in TBI patients. They require higher cerebral perfusion pressure. If a patient has both TBI and hemorrhage — target ≥ 90 SBP and control hemorrhage faster.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: AIRWAY PROCEDURES -->
+  <section id="airway" class="section">
+    <div class="section-label">10 // AIRWAY PROCEDURES</div>
+    <div class="section-title">Advanced Airway Management</div>
+
+    <p>A definitive airway is a cuffed tube in the trachea. Everything else is temporary. Know the hierarchy of airway interventions — when to escalate, and when a failed airway means you go surgical.</p>
+
+    <div class="three-col mt16">
+      <div class="card">
+        <div class="card-title">Nasopharyngeal Airway (NPA)</div>
+        <p style="font-family:var(--mono); font-size:11px; color:var(--text3); margin-bottom:10px;">BASIC AIRWAY — SEMI-CONSCIOUS PATIENTS</p>
+        <ul class="step-list">
+          <li><span class="step-num">1</span><span>Size: measure from tip of nose to earlobe (~6–8 cm in adults)</span></li>
+          <li><span class="step-num">2</span><span>Lubricate with water-soluble gel before insertion</span></li>
+          <li><span class="step-num">3</span><span>Insert into the right naris (left if right is obstructed), bevel toward the nasal septum</span></li>
+          <li><span class="step-num">4</span><span>Advance gently with a slight rotating motion — never force</span></li>
+          <li><span class="step-num">5</span><span>Correct depth: patient tolerates without gagging, air moves freely</span></li>
+          <li><span class="step-num">6</span><span>Flange must rest against the nostril — prevents aspiration into airway</span></li>
+        </ul>
+        <div class="alert alert-amber mt8">
+          <span class="alert-icon">⚠</span>
+          <span>Contraindicated in suspected basilar skull fracture (periorbital bruising, Battle's sign, clear CSF from nose/ears). Risk of intracranial placement.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Endotracheal Intubation (ETI)</div>
+        <p style="font-family:var(--mono); font-size:11px; color:var(--text3); margin-bottom:10px;">DEFINITIVE AIRWAY — UNCONSCIOUS / RSI</p>
+        <ul class="step-list">
+          <li><span class="step-num">1</span><div><strong>Pre-oxygenate</strong><p>3–5 minutes high-flow O₂ via BVM or NRB mask. Buys time during the procedure.</p></div></li>
+          <li><span class="step-num">2</span><div><strong>RSI medications (if conscious)</strong><p>Ketamine 1.5 mg/kg IV (induction) + Succinylcholine 1.5 mg/kg IV (paralytic). Paralytic onset 45–60 sec.</p></div></li>
+          <li><span class="step-num">3</span><div><strong>Laryngoscopy</strong><p>Left hand, direct laryngoscopy. Blade in vallecula (Mac) or behind epiglottis (Miller). Lift — don't lever.</p></div></li>
+          <li><span class="step-num">4</span><div><strong>Pass tube</strong><p>7.5–8.0 mm ID for adult male, 7.0–7.5 mm for female. Watch tube pass cords. Advance to 21–23 cm at teeth.</p></div></li>
+          <li><span class="step-num">5</span><div><strong>Inflate cuff</strong><p>5–10 mL air. Cuff pressure 20–30 cmH₂O if manometer available.</p></div></li>
+          <li><span class="step-num">6</span><div><strong>Confirm placement</strong><p>EtCO₂ waveform (gold standard). Bilateral breath sounds. Chest rise. No gastric sounds over epigastrium. Secure tube.</p></div></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Surgical Cricothyrotomy</div>
+        <p style="font-family:var(--mono); font-size:11px; color:var(--text3); margin-bottom:10px;">CANNOT INTUBATE / CANNOT OXYGENATE</p>
+        <p>The last resort in a "can't intubate, can't oxygenate" (CICO) scenario. Every second of hypoxia is brain damage. If you've failed two intubation attempts and a supraglottic airway — cut.</p>
+        <ul class="step-list mt8">
+          <li><span class="step-num">1</span><span>Identify the cricothyroid membrane — midline, between thyroid and cricoid cartilage</span></li>
+          <li><span class="step-num">2</span><span>Stabilize the larynx with non-dominant hand. Laryngeal handshake: thumb and middle finger on thyroid, index on CTM.</span></li>
+          <li><span class="step-num">3</span><span>Horizontal stab incision through skin and CTM (1–1.5 cm). A vertical skin incision first gives better exposure.</span></li>
+          <li><span class="step-num">4</span><span>Hook tracheal hook caudally to retract the inferior tracheal wall and prevent loss of hole</span></li>
+          <li><span class="step-num">5</span><span>Insert 6.0 mm cuffed tube, inflate cuff, confirm with EtCO₂</span></li>
+          <li><span class="step-num">6</span><span>Secure tube. Revert to formal tracheostomy within 72 hours.</span></li>
+        </ul>
+        <div class="alert alert-red mt8">
+          <span class="alert-icon">!</span>
+          <span>In ACM: surgical cric is an advanced procedure requiring high skill level. Do not hesitate — hypoxia kills faster than a botched cric. A misplaced tube is recoverable. A dead patient is not.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col mt16">
+      <div class="card">
+        <div class="card-title">BVM Ventilation Technique</div>
+        <p>Bag-valve-mask ventilation is the bridge between no airway and a definitive airway. Done poorly, it causes gastric inflation, aspiration, and worsens outcomes.</p>
+        <ul class="step-list mt8">
+          <li><span class="step-num">1</span><div><strong>Two-provider technique is always preferred</strong><p>One provider creates a seal (two-hand EC-grip), one squeezes the bag. One-provider BVM produces a poor seal and inadequate volumes.</p></div></li>
+          <li><span class="step-num">2</span><div><strong>Tidal volume: 500–600 mL (6–7 mL/kg)</strong><p>Visible chest rise only. Over-ventilation causes gastric inflation and barotrauma. Squeeze the bag gently over 1 second — do not slam it.</p></div></li>
+          <li><span class="step-num">3</span><div><strong>Rate: 10 breaths/min (1 breath every 6 sec)</strong><p>Hyperventilation causes hypocapnia, cerebral vasoconstriction, and worsens TBI. In cardiac arrest: do not over-ventilate during CPR.</p></div></li>
+          <li><span class="step-num">4</span><div><strong>OPA + NPA for unconscious patients</strong><p>Insert an oropharyngeal airway (OPA) to lift the tongue and maximize airway patency. Size: corner of mouth to earlobe.</p></div></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Failed Airway Algorithm</div>
+        <p>A structured decision tree prevents panic-driven escalation errors when airway attempts fail.</p>
+        <ul class="step-list mt8">
+          <li><span class="step-num">1</span><div><strong>Attempt 1: Direct laryngoscopy</strong><p>Optimize: position (ear-to-sternal notch), BURP maneuver (Backward, Upward, Rightward Pressure on thyroid), suction clear. Max 30 sec.</p></div></li>
+          <li><span class="step-num">2</span><div><strong>Failed attempt 1 → Call for help + Maintain O₂</strong><p>BVM ventilation between attempts. Do not rush attempt 2 with a desaturating patient — stabilize SpO₂ first.</p></div></li>
+          <li><span class="step-num">3</span><div><strong>Attempt 2: Change something</strong><p>Different blade, different size tube, video laryngoscopy if available, bougie-assisted intubation, different operator.</p></div></li>
+          <li><span class="step-num">4</span><div><strong>Failed attempt 2 → Supraglottic Airway (SGA)</strong><p>i-gel or LMA. Blindly inserted, does not require visualization. Buys time while preparing for cric.</p></div></li>
+          <li><span class="step-num">5</span><div><strong>Cannot ventilate with SGA → Surgical Cric</strong><p>CICO declared. No further attempts at intubation. Cricothyrotomy now.</p></div></li>
+        </ul>
+        <div class="alert alert-red mt8">
+          <span class="alert-icon">!</span>
+          <span>Two failed intubation attempts is the limit in trauma. Beyond two attempts, airway edema and trauma from the scope make subsequent attempts less likely to succeed, not more.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: WOUND CARE & INFECTION -->
+  <section id="woundcare" class="section">
+    <div class="section-label">11 // WOUND CARE</div>
+    <div class="section-title">Wound Management & Infection Control</div>
+
+    <p>Combat wounds are universally contaminated. Dirt, clothing fragments, bone, and environmental debris are driven into tissue by ballistic and blast injuries. Infection is a leading cause of late-stage combat death and limb loss — prevention starts at point of injury.</p>
+
+    <div class="two-col mt16">
+      <div class="card">
+        <div class="card-title">Wound Classification</div>
+        <table class="data-table">
+          <tr><th>TYPE</th><th>MECHANISM</th><th>CONTAMINATION RISK</th><th>PRIORITY</th></tr>
+          <tr><td><strong>GSW — Low velocity</strong></td><td>Pistol, handgun (&lt;600 m/s)</td><td class="val-warn">Moderate</td><td>Pack, dress, evacuate</td></tr>
+          <tr><td><strong>GSW — High velocity</strong></td><td>Rifle, carbine (&gt;600 m/s)</td><td class="val-crit">High — cavitation damage</td><td>Pack, dress, urgent evac, antibiotics</td></tr>
+          <tr><td><strong>Blast/fragmentation</strong></td><td>IED, mortar, grenade</td><td class="val-crit">Extreme — soil/debris driven deep</td><td>Multiple wounds, systematic sweep, antibiotics</td></tr>
+          <tr><td><strong>Blast amputation</strong></td><td>Pressure wave + fragmentation</td><td class="val-crit">Extreme</td><td>TK immediately, pack residual limb</td></tr>
+          <tr><td><strong>Laceration/slash</strong></td><td>Glass, shrapnel, wire</td><td class="val-warn">Moderate</td><td>Irrigate, close, dress</td></tr>
+          <tr><td><strong>Burn</strong></td><td>See burns section</td><td class="val-warn">Moderate–High</td><td>Cover, cool, IV access</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Wound Irrigation</div>
+        <p>Irrigation is the single most effective measure against wound infection. Mechanical removal of debris and bacteria outperforms any antibiotic when applied properly.</p>
+        <ul class="step-list mt8">
+          <li><span class="step-num">1</span><div><strong>Volume: minimum 1 liter per wound zone</strong><p>High-energy wounds require 3–5 liters. Normal saline is preferred. Potable water is acceptable in austere settings — sterile solution is better but delayed irrigation is worse.</p></div></li>
+          <li><span class="step-num">2</span><div><strong>Pressure: 5–8 psi (pulsatile lavage)</strong><p>Use a 35 mL syringe with an 18g angiocath or a pressure irrigation device. Low-pressure pouring is inadequate — pulsatile flow dislodges biofilm and debris.</p></div></li>
+          <li><span class="step-num">3</span><div><strong>Remove visible debris</strong><p>Forceps or gloved finger — remove fragments, clothing, dirt visible in the wound. Do not probe blindly for bullets — tracking injury is a surgical job.</p></div></li>
+          <li><span class="step-num">4</span><div><strong>Do not close contaminated wounds</strong><p>Combat wounds should NOT be primarily closed in the field. Leave open, dress loosely. Premature closure traps contamination and creates anaerobic conditions ideal for gas gangrene.</p></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="two-col mt16">
+      <div class="card">
+        <div class="card-title">Antibiotic Protocol (Ertapenem)</div>
+        <p>Ertapenem is a broad-spectrum carbapenem antibiotic covering gram-positive, gram-negative, and anaerobic organisms — the profile that matters in combat wounds.</p>
+        <table class="data-table mt8">
+          <tr><th>PARAMETER</th><th>VALUE</th></tr>
+          <tr><td>Dose</td><td class="val-normal">1g IV or IM</td></tr>
+          <tr><td>Frequency</td><td>Once daily</td></tr>
+          <tr><td>Route (IV)</td><td>Infuse over 30 minutes</td></tr>
+          <tr><td>Route (IM)</td><td>Mix with 3.2 mL 1% lidocaine — reduces injection pain</td></tr>
+          <tr><td>Indication</td><td>Any contaminated wound, blast/fragmentation injury, open fracture</td></tr>
+          <tr><td>Evacuation trigger</td><td class="val-warn">Wound infection requires evacuation to surgical care</td></tr>
+        </table>
+        <div class="alert alert-amber mt8">
+          <span class="alert-icon">⚠</span>
+          <span>Ertapenem does NOT cover Pseudomonas or MRSA. If wound infection is progressing despite ertapenem — escalate to higher medical care immediately. Field antibiotics are prophylaxis, not treatment for established infection.</span>
+        </div>
+        <p class="mt8"><strong>Timing matters:</strong> Give antibiotics within 3 hours of injury for maximum prophylactic effect. The "golden window" for preventing wound infection mirrors the TXA window. Both should be given together in major trauma.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Splinting & Fracture Management</div>
+        <p>Fractures in the field are managed conservatively — immobilize, align, and evacuate. Attempting reduction of complex fractures without surgical backup risks vascular injury and compartment syndrome.</p>
+        <ul class="step-list mt8">
+          <li><span class="step-num">1</span><div><strong>Assess neurovascular status BEFORE and AFTER splinting</strong><p>Check distal pulse, capillary refill, sensation, and motor function. Document findings. Loss of distal pulse after splinting = vascular emergency.</p></div></li>
+          <li><span class="step-num">2</span><div><strong>Traction splint for femur fractures</strong><p>Femur fractures can sequester 1–2 liters of blood into the thigh. A traction splint (Sager or Hare) reduces the fracture space and controls internal hemorrhage. Apply traction until pain reduces ~50%.</p></div></li>
+          <li><span class="step-num">3</span><div><strong>Splint in position of function</strong><p>Wrist: slight extension. Ankle: 90° neutral. Knee: slight flexion. Immobilize the joint above and below the fracture.</p></div></li>
+          <li><span class="step-num">4</span><div><strong>Open fractures: do NOT reduce</strong><p>Cover bone with a moist, sterile dressing. Do not push bone back in — this introduces contamination deeper. Irrigate the wound around the fracture. IV antibiotics mandatory.</p></div></li>
+          <li><span class="step-num">5</span><div><strong>Compartment syndrome signs</strong><p>The 6 Ps: Pain out of proportion, Pressure (tense compartment), Paresthesia, Paralysis, Pallor, Pulselessness (late). If suspected — remove all circumferential dressings/splints. This is a surgical emergency.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: BURNS & ENVIRONMENTAL -->
+  <section id="burns" class="section">
+    <div class="section-label">12 // BURNS & ENVIRONMENTAL</div>
+    <div class="section-title">Burns & Environmental Injuries</div>
+
+    <p>Burns and environmental injuries are secondary to hemorrhage and airway management in the initial primary survey — but they become primary causes of morbidity and mortality in prolonged field care. Manage them properly from the start.</p>
+
+    <div class="two-col mt16">
+      <div class="card">
+        <div class="card-title">Burn Classification</div>
+        <table class="data-table">
+          <tr><th>DEGREE</th><th>DEPTH</th><th>APPEARANCE</th><th>SENSATION</th><th>MANAGEMENT</th></tr>
+          <tr><td><strong>Superficial (1st)</strong></td><td>Epidermis only</td><td>Red, dry, no blisters</td><td class="val-warn">Painful</td><td>Cool water, analgesia. No dressing required.</td></tr>
+          <tr><td><strong>Partial thickness (2nd)</strong></td><td>Epidermis + dermis</td><td>Red, wet, blisters</td><td class="val-warn">Very painful</td><td>Cover with non-adherent dressing, IV fluids if &gt;15% BSA, analgesia</td></tr>
+          <tr><td><strong>Full thickness (3rd)</strong></td><td>All layers, subcutaneous</td><td>White/brown/black, leathery, dry</td><td class="val-crit">Painless (nerve destruction)</td><td>Cover, IV access, aggressive fluids, urgent evac</td></tr>
+          <tr><td><strong>4th degree</strong></td><td>Muscle, bone, tendon</td><td>Charred, exposed tissue</td><td class="val-crit">Painless</td><td>Cover, IV, immediate evac. Life-threatening.</td></tr>
+        </table>
+        <div class="alert alert-blue mt8">
+          <span class="alert-icon">i</span>
+          <span><strong>Painless burn = full thickness</strong>. Paradoxically, the worst burns hurt least because nerve endings are destroyed. A patient screaming in pain has superficial-partial burns. A quiet patient with leathery skin has full-thickness.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Rule of Nines — BSA Estimation</div>
+        <p>The Rule of Nines estimates total body surface area (TBSA) burned. This drives fluid resuscitation calculation (Parkland formula).</p>
+        <table class="data-table mt8">
+          <tr><th>BODY REGION</th><th>% TBSA (ADULT)</th></tr>
+          <tr><td>Head and neck</td><td class="val-normal">9%</td></tr>
+          <tr><td>Each arm (whole)</td><td class="val-normal">9%</td></tr>
+          <tr><td>Chest (anterior)</td><td class="val-normal">9%</td></tr>
+          <tr><td>Abdomen (anterior)</td><td class="val-normal">9%</td></tr>
+          <tr><td>Upper back</td><td class="val-normal">9%</td></tr>
+          <tr><td>Lower back / buttocks</td><td class="val-normal">9%</td></tr>
+          <tr><td>Each thigh (anterior + posterior)</td><td class="val-normal">9%</td></tr>
+          <tr><td>Each lower leg + foot</td><td class="val-normal">9%</td></tr>
+          <tr><td>Genitalia / perineum</td><td class="val-normal">1%</td></tr>
+        </table>
+        <p class="mt8"><strong>Parkland Formula:</strong> 4 mL × weight (kg) × %TBSA = total Lactated Ringer's in first 24 hours. Give half in first 8 hours, remainder over next 16. Monitor urine output — target 0.5–1 mL/kg/hr.</p>
+        <div class="alert alert-amber mt8">
+          <span class="alert-icon">⚠</span>
+          <span>Burns &gt; 20% TBSA require IV fluid resuscitation. Burns &gt; 40% TBSA are potentially fatal and require immediate evacuation to a burn center.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col mt16">
+      <div class="card">
+        <div class="card-title">Burn Wound Management</div>
+        <ul class="step-list">
+          <li><span class="step-num">1</span><div><strong>Stop the burning process</strong><p>Remove clothing and jewellery from the burn area. Irrigate with cool (NOT cold or ice) water for 20 minutes. Cold causes vasoconstriction and worsens depth. Hypothermia is a real risk — cool only the burn, not the patient.</p></div></li>
+          <li><span class="step-num">2</span><div><strong>Assess airway urgently in facial/inhalation burns</strong><p>Signs of inhalation injury: singed nasal hairs, carbonaceous sputum, hoarse voice, stridor, facial burns. Airway edema develops over hours — intubate early before the window closes. A swollen airway cannot be intubated.</p></div></li>
+          <li><span class="step-num">3</span><div><strong>Cover burns with appropriate dressings</strong><p>Non-adherent dressings (Mepitel, cling film as a field expedient). Do NOT use dry gauze — it sticks and causes secondary damage on removal. Do NOT burst blisters — they are a sterile biological dressing.</p></div></li>
+          <li><span class="step-num">4</span><div><strong>Analgesia — burns are extraordinarily painful</strong><p>Ketamine IV/IM for dressing changes and procedures. Morphine or fentanyl for sustained pain. Paracetamol as adjunct. Circumferential burns need escharotomy — this is a surgical procedure.</p></div></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Environmental Injuries</div>
+        <p style="color:#fff; font-weight:600; margin-bottom:8px;">Heat Illness</p>
+        <table class="data-table">
+          <tr><th>CONDITION</th><th>SIGNS</th><th>TREATMENT</th></tr>
+          <tr><td>Heat cramps</td><td>Muscle spasm, sweating intact</td><td>Oral hydration, rest, shade, stretch</td></tr>
+          <tr><td>Heat exhaustion</td><td>Heavy sweating, pallor, weakness, nausea, HR↑</td><td>Move to shade, cool wet cloths, oral/IV fluids, rest</td></tr>
+          <tr><td class="val-crit">Heat stroke</td><td class="val-crit">No sweating, hot skin, confusion, GCS↓, Temp &gt;40°C</td><td class="val-crit">EMERGENCY — rapid cooling (ice packs to groin/axilla/neck), IV fluids, immediate evac</td></tr>
+        </table>
+        <p style="color:#fff; font-weight:600; margin-top:16px; margin-bottom:8px;">Cold Injuries</p>
+        <table class="data-table">
+          <tr><th>CONDITION</th><th>SIGNS</th><th>TREATMENT</th></tr>
+          <tr><td>Frostnip</td><td>Numb, pale, waxy — no ice crystals yet</td><td>Rewarm with body heat, do NOT rub</td></tr>
+          <tr><td>Frostbite</td><td>Hard, white/blue, blistering — ice crystals in tissue</td><td>Do NOT rewarm unless evacuation impossible. Rewarmed frostbite refreezing is catastrophically worse.</td></tr>
+          <tr><td>Trench foot</td><td>Cold, wet feet &gt;6 hours — painful, swollen, mottled</td><td>Dry feet, rewarm slowly, do NOT walk on affected feet</td></tr>
+        </table>
+        <div class="alert alert-amber mt8">
+          <span class="alert-icon">⚠</span>
+          <span>Frostbitten extremities: rewarm only if there is NO risk of refreezing. A thawed-then-refrozen extremity suffers far greater tissue loss than one left frozen until definitive care.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: NEEDLE & CHEST PROCEDURES -->
+  <section id="procedures" class="section">
+    <div class="section-label">13 // FIELD PROCEDURES</div>
+    <div class="section-title">Critical Field Procedures</div>
+
+    <p>These procedures are potentially lifesaving and within the scope of a trained corpsman. They require practice, correct identification of anatomy, and confidence under pressure. Hesitation costs lives.</p>
+
+    <div class="two-col mt16">
+      <div class="card">
+        <div class="card-title">Needle Thoracostomy (Needle Decompression)</div>
+        <p style="font-family:var(--mono); font-size:11px; color:var(--red); margin-bottom:12px; letter-spacing:0.08em;">TENSION PNEUMOTHORAX — IMMEDIATELY LIFE-THREATENING</p>
+        <div class="two-col">
+          <div>
+            <p style="color:#fff; font-weight:600; margin-bottom:8px;">Indications:</p>
+            <ul class="step-list">
+              <li><span class="step-num">→</span><span>Absent unilateral breath sounds + penetrating chest trauma</span></li>
+              <li><span class="step-num">→</span><span>Respiratory distress + hypotension not responding to fluids</span></li>
+              <li><span class="step-num">→</span><span>Tracheal deviation (late sign)</span></li>
+              <li><span class="step-num">→</span><span>JVD + hypotension + absent breath sounds (Beck's triad of pneumo)</span></li>
+              <li><span class="step-num">→</span><span>Cardiac arrest in trauma with suspected tension pneumo — decompress BEFORE resuming CPR</span></li>
+            </ul>
+          </div>
+          <div>
+            <p style="color:#fff; font-weight:600; margin-bottom:8px;">Procedure:</p>
+            <ul class="step-list">
+              <li><span class="step-num">1</span><span>14g angiocath, 8 cm length minimum (standard 3.25 cm needles fail in 50%+ of patients)</span></li>
+              <li><span class="step-num">2</span><span>Site: 2nd ICS, midclavicular line. Advance over the superior border of the rib (neurovascular bundle runs inferior)</span></li>
+              <li><span class="step-num">3</span><span>Insert perpendicular to skin until a rush of air is heard/felt. Advance catheter, remove needle.</span></li>
+              <li><span class="step-num">4</span><span>Leave catheter in place — do not cap. Monitor for re-tension.</span></li>
+              <li><span class="step-num">5</span><span>Alternate site: 4th–5th ICS, anterior axillary line — higher success rate in muscular/obese patients</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="alert alert-green mt8">
+          <span class="alert-icon">✓</span>
+          <span>Success: rush of air, immediate improvement in BP and SpO₂, trachea re-centres. Reassess every 5 minutes — the catheter can kink or clot. If patient deteriorates again, repeat or proceed to finger thoracostomy.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Chest Seal Application (Open Pneumothorax)</div>
+        <p style="font-family:var(--mono); font-size:11px; color:var(--amber); margin-bottom:12px; letter-spacing:0.08em;">SUCKING CHEST WOUND — TREAT WITHIN SECONDS</p>
+        <p>An open chest wound larger than 2/3 the diameter of the trachea will preferentially draw air through the wound rather than the trachea on each breath. The lung collapses. Seal immediately.</p>
+        <ul class="step-list mt8">
+          <li><span class="step-num">1</span><div><strong>Wipe the skin dry</strong><p>Vented chest seals (Hyfin, Bolin) require a dry surface for adhesion. Blood and sweat will cause seal failure. Wipe aggressively.</p></div></li>
+          <li><span class="step-num">2</span><div><strong>Apply seal centered over wound</strong><p>Do not pack the wound before applying the seal — leave the tract open for the seal's flutter valve to function.</p></div></li>
+          <li><span class="step-num">3</span><div><strong>Vented seals only — in ACM and in doctrine</strong><p>Vented (flutter valve) seals allow air to escape during exhalation but prevent air entry during inspiration. Non-vented (occlusive) seals can convert an open pneumo to a tension pneumo — more dangerous than the original wound.</p></div></li>
+          <li><span class="step-num">4</span><div><strong>Apply seal to BOTH wounds</strong><p>High-velocity rounds almost always have both an entry and an exit wound. Both must be sealed. Sealing only one creates a tension pneumo from the other.</p></div></li>
+          <li><span class="step-num">5</span><div><strong>Monitor and burp if tension develops</strong><p>If the patient deteriorates after sealing — lift one corner of the seal to allow trapped air to escape (burp the seal). If tension persists — needle decompression.</p></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="two-col mt16">
+      <div class="card">
+        <div class="card-title">Pericardiocentesis (Cardiac Tamponade)</div>
+        <p style="font-family:var(--mono); font-size:11px; color:var(--text3); margin-bottom:12px; letter-spacing:0.08em;">ADVANCED PROCEDURE — PFC / SURGICAL LEVEL</p>
+        <p>Cardiac tamponade occurs when blood accumulates in the pericardial sac, compressing the heart. Even small volumes (150–200 mL) can be fatal. Diagnosed clinically by Beck's Triad.</p>
+        <div class="alert alert-amber">
+          <span class="alert-icon">⚠</span>
+          <span><strong>Beck's Triad:</strong> (1) Hypotension + (2) Jugular Venous Distension (JVD) + (3) Muffled/distant heart sounds. In trauma with penetrating chest injury, assume tamponade until proven otherwise.</span>
+        </div>
+        <ul class="step-list mt8">
+          <li><span class="step-num">1</span><span>18g spinal needle, 10 cm, attached to a 60 mL syringe</span></li>
+          <li><span class="step-num">2</span><span>Site: subxiphoid approach — 45° angle toward the left shoulder, just below and left of the xiphoid</span></li>
+          <li><span class="step-num">3</span><span>Advance slowly, aspirating continuously. ECG monitoring if available — ST changes indicate cardiac contact</span></li>
+          <li><span class="step-num">4</span><span>Withdraw non-clotting blood (pericardial blood defibrinated — does not clot). Even 20–30 mL removal dramatically improves BP</span></li>
+          <li><span class="step-num">5</span><span>Leave catheter in situ for repeat aspiration. Definitive treatment is surgical pericardial window.</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Urinary Catheterisation (PFC)</div>
+        <p style="font-family:var(--mono); font-size:11px; color:var(--text3); margin-bottom:12px; letter-spacing:0.08em;">PROLONGED FIELD CARE — MONITORING RENAL PERFUSION</p>
+        <p>In PFC beyond 2–3 hours, urinary output becomes a critical monitoring parameter. Urine output is a direct proxy for renal perfusion, which reflects overall circulatory adequacy.</p>
+        <p class="mt8"><strong>Target urine output:</strong> <span class="green">0.5 mL/kg/hr</span> (35 mL/hr for a 70 kg patient). Output below this threshold indicates inadequate fluid resuscitation or ongoing hemorrhage.</p>
+        <ul class="step-list mt8">
+          <li><span class="step-num">1</span><div><strong>Contraindications first</strong><p>Suspected urethral injury: blood at the meatus, perineal hematoma, high-riding prostate, pelvic fracture. Do NOT catheterise — suprapubic route or urology consult.</p></div></li>
+          <li><span class="step-num">2</span><span>Strict aseptic technique. Foley catheter 14–16 Fr. Lubricate generously.</span></li>
+          <li><span class="step-num">3</span><span>Advance until urine returns. Inflate balloon only after urine flows — premature inflation in the urethra causes severe trauma.</span></li>
+          <li><span class="step-num">4</span><span>Record every void — time, volume, colour. Dark amber/brown = haematuria or dehydration. No urine = failed placement or renal failure.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: COMMS & DOCUMENTATION -->
+  <section id="comms" class="section">
+    <div class="section-label">14 // COMMUNICATIONS</div>
+    <div class="section-title">Medical Communications & Documentation</div>
+
+    <p>Information is as important as intervention. A patient who arrives at higher care without documentation forces the receiving team to start from zero. Every intervention you forget to record is a potential lethal drug interaction or missed diagnosis.</p>
+
+    <div class="two-col mt16">
+      <div class="card">
+        <div class="card-title">TCCC Card (DD Form 1380)</div>
+        <p>The Tactical Combat Casualty Care card is the primary field documentation tool. It travels with the patient from point of injury to definitive care. Fill it out at point of injury or as soon as tactically feasible.</p>
+        <table class="data-table mt8">
+          <tr><th>FIELD</th><th>WHAT TO RECORD</th></tr>
+          <tr><td><strong>Patient ID</strong></td><td>Name, rank, last 4 SSN, blood type, allergy status (NKDA if unknown)</td></tr>
+          <tr><td><strong>Mechanism</strong></td><td>GSW, blast, blunt, fall. Calibre, distance if known. Blast: proximity, position (inside/outside vehicle)</td></tr>
+          <tr><td><strong>Injuries</strong></td><td>Anatomical diagram — mark all wounds. Circle entry/exit. Note suspected internal injuries.</td></tr>
+          <tr><td><strong>Vitals (time-stamped)</strong></td><td>HR, RR, SBP (or pulse location), SpO₂, GCS, temp, cap refill at each assessment</td></tr>
+          <tr><td><strong>Tourniquet</strong></td><td>TK time written on card AND on patient's forehead. Limb involved. Single or double TK.</td></tr>
+          <tr><td><strong>Medications</strong></td><td>Drug name, dose, route, time for EVERY medication given. Morphine dose especially — receiving team will not redose without knowing what was given.</td></tr>
+          <tr><td><strong>IV/IO access</strong></td><td>Site, gauge, time placed, total fluid volume administered, blood products given</td></tr>
+          <tr><td><strong>Procedures</strong></td><td>NPA, intubation, needle decompression, chest seal, wound packing details</td></tr>
+          <tr><td><strong>Evacuation</strong></td><td>Time of evacuation, destination, mode (ground/air), accompanying personnel</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Radio Communication — Medical Reports</div>
+        <p style="color:#fff; font-weight:600; margin-bottom:10px;">SITREP (Situation Report) — Casualty Update</p>
+        <p>When informing command or requesting support, a structured medical SITREP ensures critical information is transmitted concisely under stress. Brevity is essential — a 30-second transmission on a hot frequency may be all you get.</p>
+        <ul class="step-list mt8">
+          <li><span class="step-num">1</span><div><strong>Your callsign and location</strong><p>"DEVIL DOC 6, grid 38T PL 12345 67890"</p></div></li>
+          <li><span class="step-num">2</span><div><strong>Number and precedence of casualties</strong><p>"2 urgent, 1 priority, 0 routine"</p></div></li>
+          <li><span class="step-num">3</span><div><strong>Nature of injuries (brief)</strong><p>"GSW chest and bilateral lower extremity blast injury, TK applied, hemorrhage controlled"</p></div></li>
+          <li><span class="step-num">4</span><div><strong>Treatments given</strong><p>"TXA and morphine given, chest seal applied, IV access established"</p></div></li>
+          <li><span class="step-num">5</span><div><strong>Request</strong><p>"Requesting MEDEVAC, LZ is secure, smoke on call, no NBC"</p></div></li>
+        </ul>
+        <div class="alert alert-blue mt8">
+          <span class="alert-icon">i</span>
+          <span>Speak slowly and clearly. Spell phonetically if needed. Repeat all grid references. "Say again" is not a failure — miscommunication on a medical grid is. Confirm receipt of your MEDEVAC request by asking for readback.</span>
+        </div>
+        <p style="color:#fff; font-weight:600; margin-top:16px; margin-bottom:8px;">Phonetic Alphabet Reference:</p>
+        <p style="font-family:var(--mono); font-size:12px; color:var(--text2); line-height:2;">
+          Alpha · Bravo · Charlie · Delta · Echo · Foxtrot · Golf · Hotel · India · Juliet · Kilo · Lima · Mike · November · Oscar · Papa · Quebec · Romeo · Sierra · Tango · Uniform · Victor · Whiskey · X-Ray · Yankee · Zulu
+        </p>
+      </div>
+    </div>
+
+    <div class="card mt16">
+      <div class="card-title">Medication Tracking Log</div>
+      <p>Every medication administered must be recorded immediately. In mass casualty or extended operations, memory is not reliable. Below is a field-usable tracking format — reproduce on any available paper if the TCCC card is lost.</p>
+      <table class="data-table mt8">
+        <tr>
+          <th>TIME</th>
+          <th>MEDICATION</th>
+          <th>DOSE</th>
+          <th>ROUTE</th>
+          <th>EFFECT/RESPONSE</th>
+          <th>GIVEN BY</th>
+        </tr>
+        <tr><td style="color:var(--text3); font-family:var(--mono); font-size:11px;">____:____</td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td style="color:var(--text3); font-family:var(--mono); font-size:11px;">____:____</td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td style="color:var(--text3); font-family:var(--mono); font-size:11px;">____:____</td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td style="color:var(--text3); font-family:var(--mono); font-size:11px;">____:____</td><td></td><td></td><td></td><td></td><td></td></tr>
+      </table>
+      <div class="two-col mt16">
+        <div class="alert alert-red">
+          <span class="alert-icon">!</span>
+          <span><strong>Opioid tracking is mandatory.</strong> Receiving medics WILL ask what opioids were given, what dose, and when. An undisclosed morphine dose 20 minutes ago combined with a new dose from the receiving team can cause fatal respiratory depression.</span>
+        </div>
+        <div class="alert alert-amber">
+          <span class="alert-icon">⚠</span>
+          <span><strong>TXA — record time of injury, not time of administration.</strong> If TXA was given at 14:30 but injury was at 14:00, write "TXA 1g — injury at 14:00, given at 14:30 (30 min post-injury)." Receiving team needs to know if the window remains open.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div>31ST MEU — ARMA 3 ACM SYSTEM — CORPSMAN TRAINING MANUAL // MARCH DOCTRINE</div>
+  <div style="margin-top:6px;">FOR MILSIM TRAINING USE ONLY — NOT FOR REAL-WORLD MEDICAL GUIDANCE</div>
+</footer>
+
+<script>
+  function showDrugTab(tab, btn) {
+    document.querySelectorAll('.drug-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.drug-tab-panel').forEach(p => p.style.display = 'none');
+    btn.classList.add('active');
+    document.getElementById('drug-tab-' + tab).style.display = 'block';
+  }
+
+  function jumpTo(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.pageYOffset - 92;
+    window.scrollTo({ top, behavior: 'smooth' });
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    const btn = document.querySelector(`.nav-btn[data-target="${id}"]`);
+    if (btn) btn.classList.add('active');
+  }
+
+  // Highlight active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.pageYOffset >= s.offsetTop - 80) current = s.id;
+    });
+    document.querySelectorAll('.nav-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.target === current);
+    });
+  }, { passive: true });
+
+  const marchData = {
+    M: 'march-M', A: 'march-A', R: 'march-R', C: 'march-C', H: 'march-H'
+  };
+
+  function showMarch(letter, el) {
+    document.querySelectorAll('.march-card').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.march-detail').forEach(d => d.classList.remove('visible'));
+    el.classList.add('active');
+    document.getElementById(marchData[letter]).classList.add('visible');
+  }
+
+  function toggleAccordion(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('open');
+  }
+
+  function runAssessment() {
+    const hr = parseFloat(document.getElementById('a-hr').value);
+    const sbp = parseFloat(document.getElementById('a-sbp').value);
+    const spo2 = parseFloat(document.getElementById('a-spo2').value);
+    const rr = parseFloat(document.getElementById('a-rr').value);
+    const gcs = parseFloat(document.getElementById('a-gcs').value);
+    const temp = parseFloat(document.getElementById('a-temp').value);
+    const bleed = document.getElementById('a-bleed').value;
+
+    const result = document.getElementById('assess-result');
+    result.classList.add('visible');
+
+    let findings = [];
+    let priority = 'STABLE';
+    let priorityColor = 'var(--green)';
+    let treatments = [];
+
+    if (bleed === 'massive') {
+      findings.push({ sev: 'CRITICAL', text: 'Massive hemorrhage / traumatic amputation' });
+      treatments.push('IMMEDIATE tourniquet application — HIGH AND TIGHT');
+      treatments.push('Pack wound with hemostatic gauze — 3 min pressure');
+      treatments.push('Establish IV/IO access');
+      treatments.push('Blood transfusion if in shock');
+      treatments.push('Administer TXA within 3 hours of injury');
+      priority = 'CRITICAL'; priorityColor = 'var(--red)';
+    } else if (bleed === 'active') {
+      findings.push({ sev: 'URGENT', text: 'Active uncontrolled hemorrhage' });
+      treatments.push('Wound packing with hemostatic gauze + pressure dressing');
+      treatments.push('Consider tourniquet if extremity involved');
+      treatments.push('TXA if not given');
+      priority = 'URGENT'; priorityColor = 'var(--red)';
+    } else if (bleed === 'controlled') {
+      findings.push({ sev: 'NOTE', text: 'Hemorrhage controlled — monitor for re-bleeding' });
+    }
+
+    if (!isNaN(hr)) {
+      if (hr > 140) { findings.push({ sev: 'CRITICAL', text: 'Severe tachycardia (HR ' + hr + ')' }); treatments.push('Fluid resuscitation — assess for hypovolemia'); priority = 'CRITICAL'; priorityColor = 'var(--red)'; }
+      else if (hr > 120) { findings.push({ sev: 'URGENT', text: 'Tachycardia (HR ' + hr + ') — probable shock' }); if (priority !== 'CRITICAL') { priority = 'URGENT'; priorityColor = 'var(--red)'; } }
+      else if (hr > 100) { findings.push({ sev: 'WARN', text: 'Mild tachycardia (HR ' + hr + ')' }); if (priority === 'STABLE') { priority = 'MONITOR'; priorityColor = 'var(--amber)'; } }
+      else if (hr < 50) { findings.push({ sev: 'CRITICAL', text: 'Bradycardia (HR ' + hr + ')' }); treatments.push('Atropine 0.5 mg IV if symptomatic'); priority = 'CRITICAL'; priorityColor = 'var(--red)'; }
+    }
+
+    if (!isNaN(sbp)) {
+      if (sbp < 70) { findings.push({ sev: 'CRITICAL', text: 'Severe hypotension (SBP ' + sbp + ' mmHg)' }); treatments.push('Aggressive fluid/blood resuscitation'); treatments.push('Check for tension pneumo, cardiac tamponade'); priority = 'CRITICAL'; priorityColor = 'var(--red)'; }
+      else if (sbp < 90) { findings.push({ sev: 'URGENT', text: 'Hypotension (SBP ' + sbp + ' mmHg)' }); treatments.push('IV access — blood/crystalloid bolus'); if (priority !== 'CRITICAL') { priority = 'URGENT'; priorityColor = 'var(--red)'; } }
+    }
+
+    if (!isNaN(spo2)) {
+      if (spo2 < 90) { findings.push({ sev: 'CRITICAL', text: 'Severe hypoxia (SpO₂ ' + spo2 + '%)' }); treatments.push('High-flow O₂ immediately'); treatments.push('Assess for tension pneumo — needle decompression if suspected'); priority = 'CRITICAL'; priorityColor = 'var(--red)'; }
+      else if (spo2 < 95) { findings.push({ sev: 'URGENT', text: 'Hypoxia (SpO₂ ' + spo2 + '%)' }); treatments.push('Supplemental oxygen — assess airway'); if (priority !== 'CRITICAL') { priority = 'URGENT'; priorityColor = 'var(--red)'; } }
+    }
+
+    if (!isNaN(rr)) {
+      if (rr > 30 || rr < 10) { findings.push({ sev: 'URGENT', text: 'Abnormal respiratory rate (' + rr + ' br/min)' }); treatments.push('Assess airway and breathing — consider NPA or intubation'); if (priority === 'STABLE') { priority = 'URGENT'; priorityColor = 'var(--red)'; } }
+    }
+
+    if (!isNaN(gcs)) {
+      if (gcs <= 8) { findings.push({ sev: 'CRITICAL', text: 'Severely depressed GCS (' + gcs + ') — airway at risk' }); treatments.push('Definitive airway management — intubation'); treatments.push('Head injury protocol — maintain SpO₂ ≥ 95%, SBP ≥ 90'); priority = 'CRITICAL'; priorityColor = 'var(--red)'; }
+      else if (gcs <= 13) { findings.push({ sev: 'URGENT', text: 'Decreased GCS (' + gcs + ') — monitor neurological status' }); treatments.push('NPA, recovery position, monitor closely'); if (priority !== 'CRITICAL') { priority = 'URGENT'; priorityColor = 'var(--red)'; } }
+    }
+
+    if (!isNaN(temp)) {
+      if (temp < 32) { findings.push({ sev: 'CRITICAL', text: 'Severe hypothermia (' + temp + '°C) — coagulopathy risk' }); treatments.push('Aggressive rewarming — heat packs, thermal blanket, warm IV fluids'); priority = 'CRITICAL'; priorityColor = 'var(--red)'; }
+      else if (temp < 35) { findings.push({ sev: 'WARN', text: 'Hypothermia (' + temp + '°C)' }); treatments.push('Thermal blanket, remove wet clothing, warm IV fluids'); if (priority === 'STABLE') { priority = 'MONITOR'; priorityColor = 'var(--amber)'; } }
+    }
+
+    if (findings.length === 0) { findings.push({ sev: 'OK', text: 'All assessed parameters within normal limits' }); }
+
+    const sevColor = (s) => s === 'CRITICAL' ? 'var(--red)' : s === 'URGENT' ? 'var(--red)' : s === 'WARN' ? 'var(--amber)' : s === 'NOTE' ? 'var(--blue)' : 'var(--green)';
+
+    let html = `<div style="font-family:var(--mono); margin-bottom:14px;">
+      <span class="result-label" style="color:var(--text3);">ASSESSMENT STATUS // </span>
+      <span style="font-size:16px; font-weight:600; color:${priorityColor};">${priority}</span>
+    </div>`;
+
+    html += `<div style="margin-bottom:14px;">`;
+    findings.forEach(f => {
+      html += `<div style="display:flex; gap:10px; align-items:flex-start; margin-bottom:6px;">
+        <span style="font-family:var(--mono); font-size:10px; color:${sevColor(f.sev)}; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:3px; min-width:62px; text-align:center; margin-top:2px;">${f.sev}</span>
+        <span style="font-size:13px; color:var(--text);">${f.text}</span>
+      </div>`;
+    });
+    html += `</div>`;
+
+    if (treatments.length > 0) {
+      html += `<div style="border-top:1px solid var(--border); padding-top:12px;">
+        <div style="font-family:var(--mono); font-size:11px; color:var(--green); letter-spacing:0.1em; margin-bottom:8px;">RECOMMENDED INTERVENTIONS</div>`;
+      treatments.forEach((t, i) => {
+        html += `<div style="display:flex; gap:10px; margin-bottom:6px; font-size:13px; align-items:flex-start;">
+          <span style="font-family:var(--mono); font-size:11px; color:var(--green); min-width:20px; margin-top:2px;">${i+1}</span>
+          <span style="color:var(--text2);">${t}</span>
+        </div>`;
+      });
+      html += `</div>`;
+    }
+
+    result.innerHTML = html;
+  }
+
+  // Animate HR display
+  let hrVal = 72;
+  let hrDir = 1;
+  setInterval(() => {
+    hrVal += hrDir * (Math.random() > 0.5 ? 1 : 0);
+    if (hrVal > 78) hrDir = -1;
+    if (hrVal < 66) hrDir = 1;
+    const el = document.getElementById('hr-display');
+    if (el) el.textContent = Math.round(hrVal);
+  }, 1200);
+</script>
+</body>
+</html>
